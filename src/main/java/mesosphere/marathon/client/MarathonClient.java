@@ -12,8 +12,6 @@ import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 
-import java.util.Arrays;
-
 import static java.util.Arrays.asList;
 
 public class MarathonClient {
@@ -47,12 +45,10 @@ public class MarathonClient {
 		Builder b = Feign.builder()
 				.encoder(new GsonEncoder(ModelUtils.GSON))
 				.decoder(new GsonDecoder(ModelUtils.GSON))
-				.errorDecoder(new MarathonErrorDecoder())
-				.requestInterceptor(new MarathonHeadersInterceptor());
-
+				.errorDecoder(new MarathonErrorDecoder());
 		if (interceptors!=null)
 			b.requestInterceptors(asList(interceptors));
-
+		b.requestInterceptor(new MarathonHeadersInterceptor());
 		return b.target(Marathon.class, endpoint);
 	}
 
