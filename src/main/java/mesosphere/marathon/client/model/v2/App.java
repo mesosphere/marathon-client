@@ -22,6 +22,8 @@ public class App {
 	private Collection<Task> tasks;
 	private Integer tasksStaged;
 	private Integer tasksRunning;
+	private Integer tasksHealthy;
+	private Integer tasksUnhealthy;
 	private List<HealthCheck> healthChecks;
 
 	public String getId() {
@@ -159,6 +161,22 @@ public class App {
 
 	public void setTasksRunning(Integer tasksRunning) {
 		this.tasksRunning = tasksRunning;
+	}
+
+	public Integer getTasksHealthy() {
+		return tasksHealthy;
+	}
+
+	public void setTasksHealthy(Integer tasksHealthy) {
+		this.tasksHealthy = tasksHealthy;
+	}
+
+	public Integer getTasksUnhealthy() {
+		return tasksUnhealthy;
+	}
+
+	public void setTasksUnhealthy(Integer tasksUnhealthy) {
+		this.tasksUnhealthy = tasksUnhealthy;
 	}
 
 	public List<HealthCheck> getHealthChecks() {
