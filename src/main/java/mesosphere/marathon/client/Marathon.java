@@ -23,16 +23,16 @@ import feign.RequestLine;
 public interface Marathon {
     // Apps
 	@RequestLine("GET /v2/apps")
-	GetAppsResponse getApps();
+	GetAppsResponse getApps() throws MarathonException;
 
 	@RequestLine("GET /v2/apps/{id}")
 	GetAppResponse getApp(@Named("id") String id) throws MarathonException;
 
 	@RequestLine("GET /v2/apps/{id}/tasks")
-	GetAppTasksResponse getAppTasks(@Named("id") String id);
+	GetAppTasksResponse getAppTasks(@Named("id") String id) throws MarathonException;
 
 	@RequestLine("GET /v2/tasks")
-	GetTasksResponse getTasks();
+	GetTasksResponse getTasks() throws MarathonException;
 
 	@RequestLine("POST /v2/apps")
 	App createApp(App app) throws MarathonException;
@@ -41,18 +41,18 @@ public interface Marathon {
 	Result updateApp(@Named("app_id") String appId, App app) throws MarathonException;
 
 	@RequestLine("POST /v2/apps/{id}/restart?force={force}")
-	void restartApp(@Named("id") String id,@Named("force") boolean force);
+	void restartApp(@Named("id") String id,@Named("force") boolean force) throws MarathonException;
 
 	@RequestLine("DELETE /v2/apps/{id}")
 	Result deleteApp(@Named("id") String id) throws MarathonException;
 
 	@RequestLine("DELETE /v2/apps/{app_id}/tasks?host={host}&scale={scale}")
 	DeleteAppTasksResponse deleteAppTasks(@Named("app_id") String appId,
-			@Named("host") String host, @Named("scale") String scale);
+			@Named("host") String host, @Named("scale") String scale) throws MarathonException;
 
 	@RequestLine("DELETE /v2/apps/{app_id}/tasks/{task_id}?scale={scale}")
 	DeleteAppTaskResponse deleteAppTask(@Named("app_id") String appId,
-			@Named("task_id") String taskId, @Named("scale") String scale);
+			@Named("task_id") String taskId, @Named("scale") String scale) throws MarathonException;
 
     // Groups
 	@RequestLine("POST /v2/groups")
@@ -68,30 +68,30 @@ public interface Marathon {
 
     // Deployments
 	@RequestLine("GET /v2/deployments")
-	List<Deployment> getDeployments();
+	List<Deployment> getDeployments() throws MarathonException;
 	
 	@RequestLine("DELETE /v2/deployments/{deploymentId}")
-	void cancelDeploymentAndRollback(@Named("deploymentId") String id);
+	void cancelDeploymentAndRollback(@Named("deploymentId") String id) throws MarathonException;
 	
 	@RequestLine("DELETE /v2/deployments/{deploymentId}?force=true")
-	void cancelDeployment(@Named("deploymentId") String id);
+	void cancelDeployment(@Named("deploymentId") String id) throws MarathonException;
 
     // Event Subscriptions
 
     @RequestLine("POST /v2/eventSubscriptions?callbackUrl={url}")
-    public GetEventSubscriptionRegisterResponse register(@Named("url") String url);
+    public GetEventSubscriptionRegisterResponse register(@Named("url") String url) throws MarathonException;
 
     @RequestLine("DELETE /v2/eventSubscriptions?callbackUrl={url}")
-    public GetEventSubscriptionRegisterResponse unregister(@Named("url") String url);
+    public GetEventSubscriptionRegisterResponse unregister(@Named("url") String url) throws MarathonException;
 
     @RequestLine("GET /v2/eventSubscriptions")
-    public GetEventSubscriptionsResponse subscriptions();
+    public GetEventSubscriptionsResponse subscriptions() throws MarathonException;
 
     // Queue
 
     // Server Info
     @RequestLine("GET /v2/info")
-    GetServerInfoResponse getServerInfo();
+    GetServerInfoResponse getServerInfo() throws MarathonException;
 
     // Miscellaneous
 
