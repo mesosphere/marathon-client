@@ -5,6 +5,23 @@ import java.util.*;
 import mesosphere.marathon.client.utils.ModelUtils;
 
 public class App {
+	public static class Deployment {
+		private String id;
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		@Override
+		public String toString() {
+			return ModelUtils.toString(this);
+		}
+	}
+
 	private String id;
 	private String cmd;
 	private List<String> args;
@@ -31,6 +48,8 @@ public class App {
 	private Integer tasksUnhealthy;
 	private List<HealthCheck> healthChecks;
 	private UpgradeStrategy upgradeStrategy;
+
+	private List<Deployment> deployments;
 
 	public String getId() {
 		return id;
@@ -285,6 +304,14 @@ public class App {
 
 	public UpgradeStrategy getUpgradeStrategy() {
 		return upgradeStrategy;
+	}
+
+	public List<Deployment> getDeployments() {
+		return deployments;
+	}
+
+	public void setDeployments(List<Deployment> deployments) {
+		this.deployments = deployments;
 	}
 
 	public void setUpgradeStrategy(final UpgradeStrategy upgradeStrategy) {
