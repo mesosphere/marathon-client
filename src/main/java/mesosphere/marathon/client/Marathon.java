@@ -14,6 +14,7 @@ import mesosphere.marathon.client.model.v2.GetEventSubscriptionsResponse;
 import mesosphere.marathon.client.model.v2.GetServerInfoResponse;
 import mesosphere.marathon.client.model.v2.GetTasksResponse;
 import mesosphere.marathon.client.model.v2.Group;
+import mesosphere.marathon.client.model.v2.QueueResponse;
 import mesosphere.marathon.client.model.v2.Result;
 import mesosphere.marathon.client.utils.MarathonException;
 
@@ -88,6 +89,8 @@ public interface Marathon {
     public GetEventSubscriptionsResponse subscriptions() throws MarathonException;
 
     // Queue
+	@RequestLine("GET /v2/queue")
+	QueueResponse getQueue() throws MarathonException;
 
     // Server Info
     @RequestLine("GET /v2/info")
