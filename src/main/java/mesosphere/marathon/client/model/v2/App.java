@@ -17,6 +17,7 @@ public class App {
 	private List<List<String>> constraints;
 	private Container container;
 	private Map<String, String> env;
+	private Map<String, String> labels;
 	private String executor;
 	private List<Integer> ports;
 	private Collection<Task> tasks;
@@ -105,6 +106,14 @@ public class App {
 
 	public void setEnv(Map<String, String> env) {
 		this.env = env;
+	}
+
+	public Map<String, String> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Map<String, String> labels) {
+		this.labels = labels;
 	}
 
 	public String getExecutor() {
