@@ -1,9 +1,6 @@
 package mesosphere.marathon.client.model.v2;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import mesosphere.marathon.client.utils.ModelUtils;
 
@@ -114,6 +111,15 @@ public class App {
 
 	public void setLabels(Map<String, String> labels) {
 		this.labels = labels;
+	}
+
+	public void addLabel(final String key, final String value) {
+		if (key != null && key.trim().length() > 0) {
+			if (this.labels == null) {
+				this.labels = new HashMap<String, String>();
+			}
+			this.labels.put(key, value == null ? "" : value);
+		}
 	}
 
 	public String getExecutor() {
