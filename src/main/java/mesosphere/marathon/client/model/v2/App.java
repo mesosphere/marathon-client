@@ -12,6 +12,7 @@ public class App {
 	private Double mem;
 	private Collection<String> uris;
 	private List<List<String>> constraints;
+	private Collection<String> acceptedResourceRoles;
 	private Container container;
 	private Map<String, String> env;
 	private Map<String, String> labels;
@@ -87,6 +88,22 @@ public class App {
 		constraint.add(operator == null ? "" : operator);
 		constraint.add(value == null ? "" : value);
 		this.constraints.add(constraint);
+	}
+
+	public Collection<String> getAcceptedResourceRoles() {
+		return acceptedResourceRoles;
+	}
+
+	public void setAcceptedResourceRoles(Collection<String> acceptedResourceRoles) {
+		this.acceptedResourceRoles = acceptedResourceRoles;
+	}
+
+	public void addAcceptedResourceRole(String role) {
+		if (this.acceptedResourceRoles == null) {
+			this.acceptedResourceRoles = new ArrayList<String>();
+		}
+
+		this.acceptedResourceRoles.add(role);
 	}
 
 	public Container getContainer() {
