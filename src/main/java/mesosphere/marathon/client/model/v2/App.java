@@ -100,7 +100,7 @@ public class App {
 
 	public void addAcceptedResourceRole(String role) {
 		if (this.acceptedResourceRoles == null) {
-			this.acceptedResourceRoles = new ArrayList<String>();
+			this.acceptedResourceRoles = new HashSet<String>();
 		}
 
 		this.acceptedResourceRoles.add(role);
