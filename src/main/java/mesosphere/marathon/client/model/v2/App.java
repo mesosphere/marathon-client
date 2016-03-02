@@ -28,6 +28,7 @@ public class App {
 	private Integer tasksStaged;
 	private Integer tasksRunning;
 	private List<HealthCheck> healthChecks;
+	private UpgradeStrategy upgradeStrategy;
 
 	public String getId() {
 		return id;
@@ -262,6 +263,14 @@ public class App {
 
 	public void setHealthChecks(List<HealthCheck> healthChecks) {
 		this.healthChecks = healthChecks;
+	}
+
+	public UpgradeStrategy getUpgradeStrategy() {
+		return upgradeStrategy;
+	}
+
+	public void setUpgradeStrategy(final UpgradeStrategy upgradeStrategy) {
+		this.upgradeStrategy = upgradeStrategy;
 	}
 
 	@Override
