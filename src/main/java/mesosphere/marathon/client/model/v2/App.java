@@ -7,6 +7,7 @@ import mesosphere.marathon.client.utils.ModelUtils;
 public class App {
 	private String id;
 	private String cmd;
+	private List<String> args;
 	private Integer instances;
 	private Double cpus;
 	private Double mem;
@@ -18,6 +19,11 @@ public class App {
 	private Map<String, String> labels;
 	private String executor;
 	private List<Integer> ports;
+	private Boolean requirePorts;
+	private Collection<String> dependencies;
+	private Integer backoffSeconds;
+	private Double backoffFactor;
+	private Integer maxLaunchDelaySeconds;
 	private Collection<Task> tasks;
 	private Integer tasksStaged;
 	private Integer tasksRunning;
@@ -37,6 +43,14 @@ public class App {
 
 	public void setCmd(String cmd) {
 		this.cmd = cmd;
+	}
+
+	public List<String> getArgs() {
+		return args;
+	}
+
+	public void setArgs(final List<String> args) {
+		this.args = args;
 	}
 
 	public Integer getInstances() {
@@ -153,6 +167,55 @@ public class App {
 
 	public void setPorts(List<Integer> ports) {
 		this.ports = ports;
+	}
+
+	public Boolean getRequirePorts() {
+		return requirePorts;
+	}
+
+	public void setRequirePorts(final Boolean requirePorts) {
+		this.requirePorts = requirePorts;
+	}
+
+	public Collection<String> getDependencies() {
+		return dependencies;
+	}
+
+	public void setDependencies(final List<String> dependencies) {
+		this.dependencies = dependencies;
+	}
+
+	public void addDependency(final String dependency) {
+		if (dependency != null && dependency.trim().length() > 0) {
+			if (this.dependencies == null) {
+				this.dependencies = new HashSet<String>();
+			}
+			this.dependencies.add(dependency);
+		}
+	}
+
+	public Integer getBackoffSeconds() {
+		return backoffSeconds;
+	}
+
+	public void setBackoffSeconds(final Integer backoffSeconds) {
+		this.backoffSeconds = backoffSeconds;
+	}
+
+	public Double getBackoffFactor() {
+		return backoffFactor;
+	}
+
+	public void setBackoffFactor(final Double backoffFactor) {
+		this.backoffFactor = backoffFactor;
+	}
+
+	public Integer getMaxLaunchDelaySeconds() {
+		return maxLaunchDelaySeconds;
+	}
+
+	public void setMaxLaunchDelaySeconds(final Integer maxLaunchDelaySeconds) {
+		this.maxLaunchDelaySeconds = maxLaunchDelaySeconds;
 	}
 
 	public void addUri(String uri) {
