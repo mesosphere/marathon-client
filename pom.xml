@@ -4,7 +4,7 @@
 	<groupId>com.mesosphere</groupId>
 	<artifactId>marathon-client</artifactId>
 	<packaging>jar</packaging>
-	<version>0.13.0</version>
+	<version>0.1.0</version>
 	<name>marathon-client</name>
 	<description>A Java API client for Mesosphere's Marathon.</description>
 	<url>https://github.com/mesosphere/marathon-client</url>
