@@ -50,6 +50,7 @@ public class App {
 	private UpgradeStrategy upgradeStrategy;
 
 	private List<Deployment> deployments;
+	private TaskFailure lastTaskFailure;
 
 	public String getId() {
 		return id;
@@ -316,6 +317,14 @@ public class App {
 
 	public void setUpgradeStrategy(final UpgradeStrategy upgradeStrategy) {
 		this.upgradeStrategy = upgradeStrategy;
+	}
+
+	public TaskFailure getLastTaskFailure() {
+		return lastTaskFailure;
+	}
+
+	public void setLastTaskFailure(TaskFailure lastTaskFailure) {
+		this.lastTaskFailure = lastTaskFailure;
 	}
 
 	@Override
