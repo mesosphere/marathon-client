@@ -11,6 +11,7 @@ public class Task {
 	private Collection<Integer> ports;
 	private String stagedAt;
 	private String startedAt;
+	private Collection<HealthCheckResult> healthCheckResults;
 
 	public String getHost() {
 		return host;
@@ -58,6 +59,14 @@ public class Task {
 
 	public void setStartedAt(String startedAt) {
 		this.startedAt = startedAt;
+	}
+
+	public Collection<HealthCheckResult> getHealthCheckResults() {
+		return healthCheckResults;
+	}
+
+	public void setHealthCheckResults(Collection<HealthCheckResult> healthCheckResults) {
+		this.healthCheckResults = healthCheckResults;
 	}
 
 	@Override
