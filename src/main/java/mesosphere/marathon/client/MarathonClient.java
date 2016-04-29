@@ -2,6 +2,7 @@ package mesosphere.marathon.client;
 
 import feign.Feign.Builder;
 import feign.auth.BasicAuthRequestInterceptor;
+import mesosphere.marathon.client.auth.TokenAuthRequestInterceptor;
 import mesosphere.marathon.client.utils.MarathonException;
 import mesosphere.marathon.client.utils.ModelUtils;
 import feign.Feign;
@@ -57,5 +58,16 @@ public class MarathonClient {
 	 */
 	public static Marathon getInstanceWithBasicAuth(String endpoint, String username, String password) {
 		return getInstance(endpoint,new BasicAuthRequestInterceptor(username,password));
+	}
+
+	/**
+	 * Creates a Marathon client proxy that uses a token for authentication.
+	 *
+	 * @param endpoint URL of Marathon
+	 * @param token token
+     * @return Marathon client
+     */
+	public static Marathon getInstanceWithTokenAuth(String endpoint, String token) {
+		return getInstance(endpoint, new TokenAuthRequestInterceptor(token));
 	}
 }
