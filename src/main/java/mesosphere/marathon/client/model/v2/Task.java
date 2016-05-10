@@ -12,6 +12,7 @@ public class Task {
 	private String stagedAt;
 	private String startedAt;
 	private Collection<HealthCheckResult> healthCheckResults;
+	private String version;
 
 	public String getHost() {
 		return host;
@@ -69,9 +70,16 @@ public class Task {
 		this.healthCheckResults = healthCheckResults;
 	}
 
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
 	@Override
 	public String toString() {
 		return ModelUtils.toString(this);
 	}
-
 }
