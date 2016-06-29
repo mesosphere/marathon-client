@@ -8,7 +8,7 @@ Add marathon-client as a dependency:
 
 ```
 <dependency>
-  <groupId>mesosphere</groupId>
+  <groupId>com.mesosphere</groupId>
   <artifactId>marathon-client</artifactId>
   <version>0.2.0</version>
 </dependency>
