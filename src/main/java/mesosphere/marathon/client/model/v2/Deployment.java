@@ -8,7 +8,7 @@ import mesosphere.marathon.client.utils.ModelUtils;
 public class Deployment {
 	private Collection<String> affectedApps;
 	private String id;
-	private List<List<Action>> steps;
+	private List<Step> steps;
 	private Collection<Action> currentActions;
 	private String version;
 	private Integer currentStep;
@@ -30,11 +30,11 @@ public class Deployment {
 		this.id = id;
 	}
 
-	public List<List<Action>> getSteps() {
+	public List<Step> getSteps() {
 		return steps;
 	}
 
-	public void setSteps(List<List<Action>> steps) {
+	public void setSteps(List<Step> steps) {
 		this.steps = steps;
 	}
 
@@ -70,16 +70,33 @@ public class Deployment {
 		this.totalSteps = totalSteps;
 	}
 
-	public class Action {
-		private String action;
-		private String app;
-
-		public String getAction() {
-			return action;
+	public class Step {
+		private List<Action> actions;
+		
+		public List<Action> getActions() {
+			return actions;
 		}
 
-		public void setAction(String action) {
-			this.action = action;
+		public void setActions(List<Action> actions) {
+			this.actions = actions;
+		}
+
+		@Override
+		public String toString() {
+			return ModelUtils.toString(this);
+		}
+	}
+
+	public class Action {
+		private String type;
+		private String app;
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
 		}
 
 		public String getApp() {
