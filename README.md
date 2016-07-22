@@ -10,17 +10,8 @@ Add marathon-client as a dependency:
 <dependency>
   <groupId>com.mesosphere</groupId>
   <artifactId>marathon-client</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
 </dependency>
-```
-
-Add the following repository:
-
-```
-<repository>
-   <id>downloads.mesosphere.com</id>
-   <url>https://downloads.mesosphere.com/maven/</url>
-</repository>
 ```
 
 Please look at [releases](https://github.com/mesosphere/marathon-client/releases) page for more versions.
