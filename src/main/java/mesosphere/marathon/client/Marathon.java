@@ -38,8 +38,9 @@ public interface Marathon {
 	@RequestLine("POST /v2/apps")
 	App createApp(App app) throws MarathonException;
 
-	@RequestLine("PUT /v2/apps/{app_id}")
-	Result updateApp(@Param("app_id") String appId, App app) throws MarathonException;
+	@RequestLine("PUT /v2/apps/{app_id}?force={force}")
+	Result updateApp(@Param("app_id") String appId, App app,
+            @Param("force") boolean force) throws MarathonException;
 
 	@RequestLine("POST /v2/apps/{id}/restart?force={force}")
 	void restartApp(@Param("id") String id,@Param("force") boolean force) throws MarathonException;
