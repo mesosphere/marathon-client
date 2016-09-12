@@ -2,9 +2,8 @@ package mesosphere.marathon.client.model.v2;
 
 import mesosphere.marathon.client.utils.ModelUtils;
 
-public class Volume {
+public abstract class Volume {
 	private String containerPath;
-	private String hostPath;
 	private String mode;
 
 	public String getContainerPath() {
@@ -13,14 +12,6 @@ public class Volume {
 
 	public void setContainerPath(String containerPath) {
 		this.containerPath = containerPath;
-	}
-
-	public String getHostPath() {
-		return hostPath;
-	}
-
-	public void setHostPath(String hostPath) {
-		this.hostPath = hostPath;
 	}
 
 	public String getMode() {
