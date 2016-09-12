@@ -8,6 +8,7 @@ public class ExternalVolume extends Volume {
     @SerializedName("external")
     private ExternalVolumeInfo externalVolumeInfo;
 
+
     public ExternalVolume() {
         this.externalVolumeInfo = new ExternalVolumeInfo();
     }
@@ -18,6 +19,18 @@ public class ExternalVolume extends Volume {
 
     public void setExternalVolumeInfo(ExternalVolumeInfo externalVolumeInfo) {
         this.externalVolumeInfo = externalVolumeInfo;
+    }
+
+    public void setName(String name) {
+        this.externalVolumeInfo.name = name;
+    }
+
+    public void setProvider(String provider) {
+        this.externalVolumeInfo.provider = provider;
+    }
+
+    public void setDriver(String driver) {
+        this.externalVolumeInfo.options.driver = driver;
     }
 
     @Override
