@@ -33,6 +33,8 @@ public class ExternalVolume extends Volume {
         this.externalVolumeInfo.options.driver = driver;
     }
 
+    public void setSize(Integer size) { this.externalVolumeInfo.size = size; }
+
     @Override
     public String toString() {
         return ModelUtils.toString(this);
