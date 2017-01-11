@@ -8,19 +8,19 @@ public class ExternalVolume extends Volume {
     @SerializedName("external")
     private ExternalVolumeInfo externalVolumeInfo;
 
-
     public ExternalVolume() {
         this.externalVolumeInfo = new ExternalVolumeInfo();
     }
 
-    public ExternalVolumeInfo getExternalVolumeInfo() {
+    ExternalVolumeInfo getExternalVolumeInfo() {
         return externalVolumeInfo;
     }
 
-    public void setExternalVolumeInfo(ExternalVolumeInfo externalVolumeInfo) {
+    void setExternalVolumeInfo(ExternalVolumeInfo externalVolumeInfo) {
         this.externalVolumeInfo = externalVolumeInfo;
     }
 
+    /** Proxies **/
     public void setName(String name) {
         this.externalVolumeInfo.name = name;
     }
@@ -29,11 +29,33 @@ public class ExternalVolume extends Volume {
         this.externalVolumeInfo.provider = provider;
     }
 
+    public void setSize(Integer size) {
+        this.externalVolumeInfo.size = size;
+    }
+
     public void setDriver(String driver) {
         this.externalVolumeInfo.options.driver = driver;
     }
 
-    public void setSize(Integer size) { this.externalVolumeInfo.size = size; }
+    public void setOptSize(Integer size) {
+        this.externalVolumeInfo.options.size = size;
+    }
+
+    public void setOptIops(Integer iops) {
+        this.externalVolumeInfo.options.iops = iops;
+    }
+
+    public void setOptVolumeType(String volumeType) {
+        this.externalVolumeInfo.options.volumeType = volumeType;
+    }
+
+    public void setOptNewFsType(String newFsType) {
+        this.externalVolumeInfo.options.newFsType = newFsType;
+    }
+
+    public void setOptOverwriteFs(Boolean overwriteFs) {
+        this.externalVolumeInfo.options.overwriteFs = overwriteFs;
+    }
 
     @Override
     public String toString() {
@@ -50,35 +72,35 @@ public class ExternalVolume extends Volume {
             this.options = new Options();
         }
 
-        public String getName() {
+        String getName() {
             return name;
         }
 
-        public void setName(String name) {
+        void setName(String name) {
             this.name = name;
         }
 
-        public Integer getSize() {
+        Integer getSize() {
             return size;
         }
 
-        public void setSize(Integer size) {
+        void setSize(Integer size) {
             this.size = size;
         }
 
-        public String getProvider() {
+        String getProvider() {
             return provider;
         }
 
-        public void setProvider(String provider) {
+        void setProvider(String provider) {
             this.provider = provider;
         }
 
-        public Options getOptions() {
+        Options getOptions() {
             return options;
         }
 
-        public void setOptions(Options options) {
+        void setOptions(Options options) {
             this.options = options;
         }
         @Override
@@ -96,51 +118,51 @@ public class ExternalVolume extends Volume {
             private String newFsType;
             private Boolean overwriteFs;
 
-            public String getDriver() {
+            String getDriver() {
                 return driver;
             }
 
-            public void setDriver(String driver) {
+            void setDriver(String driver) {
                 this.driver = driver;
             }
 
-            public Integer getSize() {
+            Integer getSize() {
                 return size;
             }
 
-            public void setSize(Integer size) {
+            void setSize(Integer size) {
                 this.size = size;
             }
 
-            public Integer getIops() {
+            Integer getIops() {
                 return iops;
             }
 
-            public void setIops(Integer iops) {
+            void setIops(Integer iops) {
                 this.iops = iops;
             }
 
-            public String getVolumeType() {
+            String getVolumeType() {
                 return volumeType;
             }
 
-            public void setVolumeType(String volumeType) {
+            void setVolumeType(String volumeType) {
                 this.volumeType = volumeType;
             }
 
-            public String getNewFsType() {
+            String getNewFsType() {
                 return newFsType;
             }
 
-            public void setNewFsType(String newFsType) {
+            void setNewFsType(String newFsType) {
                 this.newFsType = newFsType;
             }
 
-            public Boolean getOverwriteFs() {
+            Boolean getOverwriteFs() {
                 return overwriteFs;
             }
 
-            public void setOverwriteFs(Boolean overwriteFs) {
+            void setOverwriteFs(Boolean overwriteFs) {
                 this.overwriteFs = overwriteFs;
             }
             @Override
