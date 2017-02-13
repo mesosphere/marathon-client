@@ -2,9 +2,8 @@ package mesosphere.marathon.client;
 
 import feign.Feign.Builder;
 import feign.auth.BasicAuthRequestInterceptor;
+import mesosphere.client.common.ModelUtils;
 import mesosphere.marathon.client.auth.TokenAuthRequestInterceptor;
-import mesosphere.marathon.client.utils.MarathonException;
-import mesosphere.marathon.client.utils.ModelUtils;
 import feign.Feign;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

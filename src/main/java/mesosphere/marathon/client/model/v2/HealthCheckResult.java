@@ -1,6 +1,6 @@
 package mesosphere.marathon.client.model.v2;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 /**
  * Represents information about attempting a {@link HealthCheck} on a task.

@@ -1,29 +1,29 @@
 package mesosphere.marathon.client.model.v2;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 public class Result {
-	private String version;
-	private String deploymentId;
+    private String deploymentId;
+    private String version;
 
-	public String getVersion() {
-		return version;
-	}
+    public String getDeploymentId() {
+        return deploymentId;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setDeploymentId(String deploymentId) {
+        this.deploymentId = deploymentId;
+    }
 
-	public String getDeploymentId() {
-		return deploymentId;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public void setDeploymentId(String deploymentId) {
-		this.deploymentId = deploymentId;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	@Override
-	public String toString() {
-		return ModelUtils.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ModelUtils.toString(this);
+    }
 }

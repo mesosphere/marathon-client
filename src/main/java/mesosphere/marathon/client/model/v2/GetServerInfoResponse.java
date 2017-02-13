@@ -1,34 +1,22 @@
 package mesosphere.marathon.client.model.v2;
 
-import mesosphere.marathon.client.utils.ModelUtils;
-
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
+import mesosphere.client.common.ModelUtils;
 
 public class GetServerInfoResponse {
-    private String frameworkId;
-    private String leader;
     private String name;
     private String version;
-    private HttpConfig http_config;
-    private EventSubscriber event_subscriber;
+    private String buildref;
+    private Boolean elected;
+    private String leader;
+    private String frameworkId;
     private MarathonConfig marathon_config;
     private ZookeeperConfig zookeeper_config;
-
-    public String getFrameworkId() {
-        return frameworkId;
-    }
-
-    public void setFrameworkId(String frameworkId) {
-        this.frameworkId = frameworkId;
-    }
-
-    public String getLeader() {
-        return leader;
-    }
-
-    public void setLeader(String leader) {
-        this.leader = leader;
-    }
+    private EventSubscriber event_subscriber;
+    private HttpConfig http_config;
 
     public String getName() {
         return name;
@@ -46,20 +34,36 @@ public class GetServerInfoResponse {
         this.version = version;
     }
 
-    public HttpConfig getHttp_config() {
-        return http_config;
+    public String getBuildref() {
+        return buildref;
     }
 
-    public void setHttp_config(HttpConfig http_config) {
-        this.http_config = http_config;
+    public void setBuildref(String buildref) {
+        this.buildref = buildref;
     }
 
-    public EventSubscriber getEvent_subscriber() {
-        return event_subscriber;
+    public Boolean getElected() {
+        return elected;
     }
 
-    public void setEvent_subscriber(EventSubscriber event_subscriber) {
-        this.event_subscriber = event_subscriber;
+    public void setElected(Boolean elected) {
+        this.elected = elected;
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
+    }
+
+    public String getFrameworkId() {
+        return frameworkId;
+    }
+
+    public void setFrameworkId(String frameworkId) {
+        this.frameworkId = frameworkId;
     }
 
     public MarathonConfig getMarathon_config() {
@@ -78,106 +82,50 @@ public class GetServerInfoResponse {
         this.zookeeper_config = zookeeper_config;
     }
 
-    public class ZookeeperConfig {
-        private String zk;
-        private String zk_hosts;
-        private String zk_path;
-        private String zk_state;
-        private Integer zk_timeout;
-        private ZkFutureTimeout zk_future_timeout;
+    public EventSubscriber getEvent_subscriber() {
+        return event_subscriber;
+    }
 
-        public class ZkFutureTimeout {
-            private Integer duration;
+    public void setEvent_subscriber(EventSubscriber event_subscriber) {
+        this.event_subscriber = event_subscriber;
+    }
 
-            public Integer getDuration() {
-                return duration;
-            }
+    public HttpConfig getHttp_config() {
+        return http_config;
+    }
 
-            public void setDuration(Integer duration) {
-                this.duration = duration;
-            }
-
-            @Override
-            public String toString() {
-                return ModelUtils.toString(this);
-            }
-        }
-
-        public String getZk() {
-            return zk;
-        }
-
-        public void setZk(String zk) {
-            this.zk = zk;
-        }
-
-        public String getZk_hosts() {
-            return zk_hosts;
-        }
-
-        public void setZk_hosts(String zk_hosts) {
-            this.zk_hosts = zk_hosts;
-        }
-
-        public String getZk_path() {
-            return zk_path;
-        }
-
-        public void setZk_path(String zk_path) {
-            this.zk_path = zk_path;
-        }
-
-        public String getZk_state() {
-            return zk_state;
-        }
-
-        public void setZk_state(String zk_state) {
-            this.zk_state = zk_state;
-        }
-
-        public Integer getZk_timeout() {
-            return zk_timeout;
-        }
-
-        public void setZk_timeout(Integer zk_timeout) {
-            this.zk_timeout = zk_timeout;
-        }
-
-        public ZkFutureTimeout getZk_future_timeout() {
-            return zk_future_timeout;
-        }
-
-        public void setZk_future_timeout(ZkFutureTimeout zk_future_timeout) {
-            this.zk_future_timeout = zk_future_timeout;
-        }
-
-        @Override
-        public String toString() {
-            return ModelUtils.toString(this);
-        }
+    public void setHttp_config(HttpConfig http_config) {
+        this.http_config = http_config;
     }
 
     public class MarathonConfig {
-        private Boolean checkpoint;
-        private String executor;
-        private Integer failover_timeout;
-        private Boolean ha;
-        private String hostname;
-        private Integer local_port_max;
-        private Integer local_port_min;
         private String master;
+        private Integer failover_timeout;
+        private String framework_name;
+        private Boolean ha;
+        private Boolean checkpoint;
+        private Integer local_port_min;
+        private Integer local_port_max;
+        private String executor;
+        private String hostname;
+        private String webui_url;
         private String mesos_role;
-        private String mesos_user;
+        private Integer task_launch_timeout;
+        private Integer task_reservation_timeout;
         private Integer reconciliation_initial_delay;
         private Integer reconciliation_interval;
-        private Integer task_launch_timeout;
+        private String mesos_user;
+        private Integer leader_proxy_connection_timeout_ms;
+        private Integer leader_proxy_read_timeout_ms;
+        private List<String> features = new ArrayList<>();
+        private String mesos_leader_ui_url;
 
-        public String getExecutor() {
-            return executor;
+        public String getMaster() {
+            return master;
         }
 
-        public void setExecutor(String executor) {
-            this.executor = executor;
+        public void setMaster(String master) {
+            this.master = master;
         }
 
         public Integer getFailover_timeout() {
@@ -188,6 +136,14 @@ public class GetServerInfoResponse {
             this.failover_timeout = failover_timeout;
         }
 
+        public String getFramework_name() {
+            return framework_name;
+        }
+
+        public void setFramework_name(String framework_name) {
+            this.framework_name = framework_name;
+        }
+
         public Boolean getHa() {
             return ha;
         }
@@ -196,20 +152,12 @@ public class GetServerInfoResponse {
             this.ha = ha;
         }
 
-        public String getHostname() {
-            return hostname;
+        public Boolean getCheckpoint() {
+            return checkpoint;
         }
 
-        public void setHostname(String hostname) {
-            this.hostname = hostname;
-        }
-
-        public Integer getLocal_port_max() {
-            return local_port_max;
-        }
-
-        public void setLocal_port_max(Integer local_port_max) {
-            this.local_port_max = local_port_max;
+        public void setCheckpoint(Boolean checkpoint) {
+            this.checkpoint = checkpoint;
         }
 
         public Integer getLocal_port_min() {
@@ -220,12 +168,36 @@ public class GetServerInfoResponse {
             this.local_port_min = local_port_min;
         }
 
-        public String getMaster() {
-            return master;
+        public Integer getLocal_port_max() {
+            return local_port_max;
         }
 
-        public void setMaster(String master) {
-            this.master = master;
+        public void setLocal_port_max(Integer local_port_max) {
+            this.local_port_max = local_port_max;
+        }
+
+        public String getExecutor() {
+            return executor;
+        }
+
+        public void setExecutor(String executor) {
+            this.executor = executor;
+        }
+
+        public String getHostname() {
+            return hostname;
+        }
+
+        public void setHostname(String hostname) {
+            this.hostname = hostname;
+        }
+
+        public String getWebui_url() {
+            return webui_url;
+        }
+
+        public void setWebui_url(String webui_url) {
+            this.webui_url = webui_url;
         }
 
         public String getMesos_role() {
@@ -236,12 +208,20 @@ public class GetServerInfoResponse {
             this.mesos_role = mesos_role;
         }
 
-        public String getMesos_user() {
-            return mesos_user;
+        public Integer getTask_launch_timeout() {
+            return task_launch_timeout;
         }
 
-        public void setMesos_user(String mesos_user) {
-            this.mesos_user = mesos_user;
+        public void setTask_launch_timeout(Integer task_launch_timeout) {
+            this.task_launch_timeout = task_launch_timeout;
+        }
+
+        public Integer getTask_reservation_timeout() {
+            return task_reservation_timeout;
+        }
+
+        public void setTask_reservation_timeout(Integer task_reservation_timeout) {
+            this.task_reservation_timeout = task_reservation_timeout;
         }
 
         public Integer getReconciliation_initial_delay() {
@@ -260,20 +240,88 @@ public class GetServerInfoResponse {
             this.reconciliation_interval = reconciliation_interval;
         }
 
-        public Integer getTask_launch_timeout() {
-            return task_launch_timeout;
+        public String getMesos_user() {
+            return mesos_user;
         }
 
-        public void setTask_launch_timeout(Integer task_launch_timeout) {
-            this.task_launch_timeout = task_launch_timeout;
+        public void setMesos_user(String mesos_user) {
+            this.mesos_user = mesos_user;
         }
 
-        public Boolean getCheckpoint() {
-            return checkpoint;
+        public Integer getLeader_proxy_connection_timeout_ms() {
+            return leader_proxy_connection_timeout_ms;
         }
 
-        public void setCheckpoint(Boolean checkpoint) {
-            this.checkpoint = checkpoint;
+        public void setLeader_proxy_connection_timeout_ms(Integer leader_proxy_connection_timeout_ms) {
+            this.leader_proxy_connection_timeout_ms = leader_proxy_connection_timeout_ms;
+        }
+
+        public Integer getLeader_proxy_read_timeout_ms() {
+            return leader_proxy_read_timeout_ms;
+        }
+
+        public void setLeader_proxy_read_timeout_ms(Integer leader_proxy_read_timeout_ms) {
+            this.leader_proxy_read_timeout_ms = leader_proxy_read_timeout_ms;
+        }
+
+        public List<String> getFeatures() {
+            return features;
+        }
+
+        public void setFeatures(List<String> features) {
+            this.features = features;
+        }
+
+        public String getMesos_leader_ui_url() {
+            return mesos_leader_ui_url;
+        }
+
+        public void setMesos_leader_ui_url(String mesos_leader_ui_url) {
+            this.mesos_leader_ui_url = mesos_leader_ui_url;
+        }
+
+        @Override
+        public String toString() {
+            return ModelUtils.toString(this);
+        }
+    }
+
+    public class ZookeeperConfig {
+        private String zk;
+        private Integer zk_timeout;
+        private Integer zk_session_timeout;
+        private Integer zk_max_versions;
+
+        public String getZk() {
+            return zk;
+        }
+
+        public void setZk(String zk) {
+            this.zk = zk;
+        }
+
+        public Integer getZk_timeout() {
+            return zk_timeout;
+        }
+
+        public void setZk_timeout(Integer zk_timeout) {
+            this.zk_timeout = zk_timeout;
+        }
+
+        public Integer getZk_session_timeout() {
+            return zk_session_timeout;
+        }
+
+        public void setZk_session_timeout(Integer zk_session_timeout) {
+            this.zk_session_timeout = zk_session_timeout;
+        }
+
+        public Integer getZk_max_versions() {
+            return zk_max_versions;
+        }
+
+        public void setZk_max_versions(Integer zk_max_versions) {
+            this.zk_max_versions = zk_max_versions;
         }
 
         @Override
@@ -309,17 +357,8 @@ public class GetServerInfoResponse {
     }
 
     public class HttpConfig {
-        private String assets_path;
         private String http_port;
         private String https_port;
-
-        public String getAssets_path() {
-            return assets_path;
-        }
-
-        public void setAssets_path(String assets_path) {
-            this.assets_path = assets_path;
-        }
 
         public String getHttp_port() {
             return http_port;

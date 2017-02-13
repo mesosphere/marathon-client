@@ -4,15 +4,15 @@ import java.util.List;
 
 import mesosphere.client.common.ModelUtils;
 
-public class GetAppTasksResponse {
-    private List<Task> tasks;
+public class DeleteTaskCriteria {
+    private List<String> ids;
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<String> getIds() {
+        return ids;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setIds(List<String> ids) {
+        this.ids = ids;
     }
 
     @Override

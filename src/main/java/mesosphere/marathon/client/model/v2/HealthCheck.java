@@ -1,8 +1,6 @@
 package mesosphere.marathon.client.model.v2;
 
-import mesosphere.marathon.client.utils.ModelUtils;
-
-import java.util.Collection;
+import mesosphere.client.common.ModelUtils;
 
 public class HealthCheck {
 	private Command command;

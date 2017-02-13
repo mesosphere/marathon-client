@@ -1,10 +1,16 @@
 package mesosphere.marathon.client.model.v2;
 
-import java.util.List;
-
 import mesosphere.client.common.ModelUtils;
 
-public class GetAppsResponse {
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+/**
+ * @author Will Gorman
+ */
+public class GetAppNamespaceResponse {
+    @SerializedName("*")
     private List<App> apps;
 
     public List<App> getApps() {
@@ -19,5 +25,4 @@ public class GetAppsResponse {
     public String toString() {
         return ModelUtils.toString(this);
     }
-
 }

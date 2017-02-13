@@ -4,15 +4,15 @@ import java.util.List;
 
 import mesosphere.client.common.ModelUtils;
 
-public class GetAppTasksResponse {
-    private List<Task> tasks;
+public class GetPluginsResponse {
+    private List<Plugin> plugins;
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Plugin> getPlugins() {
+        return plugins;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setPlugins(List<Plugin> plugins) {
+        this.plugins = plugins;
     }
 
     @Override

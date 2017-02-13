@@ -1,34 +1,34 @@
 package mesosphere.marathon.client.model.v2;
 
 import com.google.gson.*;
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 import java.lang.reflect.Type;
 
 public abstract class Volume {
-	private String containerPath;
-	private String mode;
+    private String containerPath;
+    private String mode;
 
-	public String getContainerPath() {
-		return containerPath;
-	}
+    public String getContainerPath() {
+        return containerPath;
+    }
 
-	public void setContainerPath(String containerPath) {
-		this.containerPath = containerPath;
-	}
+    public void setContainerPath(String containerPath) {
+        this.containerPath = containerPath;
+    }
 
-	public String getMode() {
-		return mode;
-	}
+    public String getMode() {
+        return mode;
+    }
 
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
-	@Override
-	public String toString() {
-		return ModelUtils.toString(this);
-	}
+    @Override
+    public String toString() {
+        return ModelUtils.toString(this);
+    }
 
 	public static class VolumeAdapter implements JsonDeserializer<Volume>, JsonSerializer<Volume> {
 

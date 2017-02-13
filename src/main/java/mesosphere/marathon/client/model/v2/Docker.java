@@ -1,16 +1,16 @@
 package mesosphere.marathon.client.model.v2;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+
+import mesosphere.client.common.ModelUtils;
 
 import java.util.Collection;
-import java.util.List;
 
 public class Docker {
 	private String image;
 	private String network;
 	private boolean forcePullImage;
 	private Collection<Port> portMappings;
-	private List<Parameter> parameters;
+	private Collection<Parameter> parameters;
 	private boolean privileged;
 
 	public String getImage() {
@@ -45,11 +45,11 @@ public class Docker {
 		this.privileged = privileged;
 	}
 
-	public List<Parameter> getParameters() {
+	public Collection<Parameter> getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(List<Parameter> parameters) {
+	public void setParameters(Collection<Parameter> parameters) {
 		this.parameters = parameters;
 	}
 

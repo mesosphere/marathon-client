@@ -3,7 +3,7 @@ package mesosphere.marathon.client.model.v2;
 import java.util.Collection;
 import java.util.List;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 public class Deployment {
 	private Collection<String> affectedApps;
