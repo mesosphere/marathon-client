@@ -33,9 +33,6 @@ import mesosphere.marathon.client.model.v2.Group;
 import mesosphere.marathon.client.model.v2.Queue;
 import mesosphere.marathon.client.model.v2.Result;
 
-/**
- * Created by jt018805 on 11/14/16.
- */
 @Headers({ "Content-Type: application/json", "Accept: application/json" })
 public interface DCOS {
 

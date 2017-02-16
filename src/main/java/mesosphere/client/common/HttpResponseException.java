@@ -1,8 +1,5 @@
 package mesosphere.client.common;
 
-/**
- * Created by jt018805 on 11/11/16.
- */
 public abstract class HttpResponseException extends RuntimeException {
     private int status;
     private String message;

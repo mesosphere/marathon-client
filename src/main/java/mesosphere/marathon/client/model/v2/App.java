@@ -6,10 +6,10 @@ import mesosphere.client.common.ModelUtils;
 
 public class App {
 
-    public App() {
-    }
+	public App() {
+	}
 
-    public static class Deployment {
+	public static class Deployment {
 		private String id;
 
 		public String getId() {
@@ -29,41 +29,41 @@ public class App {
 	private String id;
 	private String cmd;
 	private List<String> args;
-    private String user;
+	private String user;
 	private Integer instances;
 	private Double cpus;
 	private Double mem;
-    private Double disk;
-    private Double gpus;
+	private Double disk;
+	private Double gpus;
 	private Collection<String> uris;
 	private List<List<String>> constraints;
 	private Collection<String> acceptedResourceRoles;
 	private Container container;
 	private Map<String, Object> env;
 	private Map<String, String> labels;
-    private String ipAddress;
-    private String version;
-    private String residency;
-    private Integer taskKillGracePeriodSeconds;
-    private Map<String, Object> secrets = new HashMap<>();
+	private String ipAddress;
+	private String version;
+	private String residency;
+	private Integer taskKillGracePeriodSeconds;
+	private Map<String, Object> secrets;
 	private String executor;
-    private List<String> fetch = new ArrayList<>();
-    private List<String> storeUrls = new ArrayList<>();
+	private List<String> fetch;
+	private List<String> storeUrls;
 	private List<Integer> ports;
-    private List<PortDefinition> portDefinitions;
-    private Boolean requirePorts;
+	private List<PortDefinition> portDefinitions;
+	private Boolean requirePorts;
 	private Collection<String> dependencies;
 	private Integer backoffSeconds;
 	private Double backoffFactor;
 	private Integer maxLaunchDelaySeconds;
 	private Collection<Task> tasks;
-    private VersionInfo versionInfo;
+	private VersionInfo versionInfo;
 	private Integer tasksStaged;
 	private Integer tasksRunning;
 	private Integer tasksHealthy;
 	private Integer tasksUnhealthy;
 	private List<HealthCheck> healthChecks;
-    private List<Object> readinessChecks = new ArrayList<>();
+	private List<Object> readinessChecks;
 	private UpgradeStrategy upgradeStrategy;
 
 	private List<Deployment> deployments;
@@ -93,13 +93,13 @@ public class App {
 		this.args = args;
 	}
 
-    public String getUser() {
-        return user;
-    }
+	public String getUser() {
+		return user;
+	}
 
-    public void setUser(final String user) {
-        this.user = user;
-    }
+	public void setUser(final String user) {
+		this.user = user;
+	}
 
 	public Integer getInstances() {
 		return instances;
@@ -125,21 +125,21 @@ public class App {
 		this.mem = mem;
 	}
 
-    public Double getDisk() {
-        return disk;
-    }
+	public Double getDisk() {
+		return disk;
+	}
 
-    public void setDisk(final Double disk) {
-        this.disk = disk;
-    }
+	public void setDisk(final Double disk) {
+		this.disk = disk;
+	}
 
-    public Double getGpus() {
-        return gpus;
-    }
+	public Double getGpus() {
+		return gpus;
+	}
 
-    public void setGpus(final Double gpus) {
-        this.gpus = gpus;
-    }
+	public void setGpus(final Double gpus) {
+		this.gpus = gpus;
+	}
 
 	public Collection<String> getUris() {
 		return uris;
@@ -208,45 +208,45 @@ public class App {
 		this.labels = labels;
 	}
 
-    public String getIpAddress() {
-        return ipAddress;
-    }
+	public String getIpAddress() {
+		return ipAddress;
+	}
 
-    public void setIpAddress(final String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
+	public void setIpAddress(final String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
 
-    public String getVersion() {
-        return version;
-    }
+	public String getVersion() {
+		return version;
+	}
 
-    public void setVersion(final String version) {
-        this.version = version;
-    }
+	public void setVersion(final String version) {
+		this.version = version;
+	}
 
-    public String getResidency() {
-        return residency;
-    }
+	public String getResidency() {
+		return residency;
+	}
 
-    public void setResidency(final String residency) {
-        this.residency = residency;
-    }
+	public void setResidency(final String residency) {
+		this.residency = residency;
+	}
 
-    public Integer getTaskKillGracePeriodSeconds() {
-        return taskKillGracePeriodSeconds;
-    }
+	public Integer getTaskKillGracePeriodSeconds() {
+		return taskKillGracePeriodSeconds;
+	}
 
-    public void setTaskKillGracePeriodSeconds(final Integer taskKillGracePeriodSeconds) {
-        this.taskKillGracePeriodSeconds = taskKillGracePeriodSeconds;
-    }
+	public void setTaskKillGracePeriodSeconds(final Integer taskKillGracePeriodSeconds) {
+		this.taskKillGracePeriodSeconds = taskKillGracePeriodSeconds;
+	}
 
-    public Map<String, Object> getSecrets() {
-        return secrets;
-    }
+	public Map<String, Object> getSecrets() {
+		return secrets;
+	}
 
-    public void setSecrets(final Map<String, Object> secrets) {
-        this.secrets = secrets;
-    }
+	public void setSecrets(final Map<String, Object> secrets) {
+		this.secrets = secrets;
+	}
 
 	public void addLabel(final String key, final String value) {
 		if (key != null && key.trim().length() > 0) {
@@ -265,21 +265,21 @@ public class App {
 		this.executor = executor;
 	}
 
-    public List<String> getFetch() {
-        return fetch;
-    }
+	public List<String> getFetch() {
+		return fetch;
+	}
 
-    public void setFetch(final List<String> fetch) {
-        this.fetch = fetch;
-    }
+	public void setFetch(final List<String> fetch) {
+		this.fetch = fetch;
+	}
 
-    public List<String> getStoreUrls() {
-        return storeUrls;
-    }
+	public List<String> getStoreUrls() {
+		return storeUrls;
+	}
 
-    public void setStoreUrls(final List<String> storeUrls) {
-        this.storeUrls = storeUrls;
-    }
+	public void setStoreUrls(final List<String> storeUrls) {
+		this.storeUrls = storeUrls;
+	}
 
 	public List<Integer> getPorts() {
 		return ports;
@@ -289,13 +289,13 @@ public class App {
 		this.ports = ports;
 	}
 
-    public List<PortDefinition> getPortDefinitions() {
-        return portDefinitions;
-    }
+	public List<PortDefinition> getPortDefinitions() {
+		return portDefinitions;
+	}
 
-    public void setPortDefinitions(List<PortDefinition> portDefinitions) {
-        this.portDefinitions = portDefinitions;
-    }
+	public void setPortDefinitions(List<PortDefinition> portDefinitions) {
+		this.portDefinitions = portDefinitions;
+	}
 
 	public Boolean getRequirePorts() {
 		return requirePorts;
@@ -368,13 +368,13 @@ public class App {
 		this.tasks = tasks;
 	}
 
-    public VersionInfo getVersionInfo() {
-        return versionInfo;
-    }
+	public VersionInfo getVersionInfo() {
+		return versionInfo;
+	}
 
-    public void setVersionInfo(final VersionInfo versionInfo) {
-        this.versionInfo = versionInfo;
-    }
+	public void setVersionInfo(final VersionInfo versionInfo) {
+		this.versionInfo = versionInfo;
+	}
 
 	public Integer getTasksStaged() {
 		return tasksStaged;
@@ -416,13 +416,13 @@ public class App {
 		this.healthChecks = healthChecks;
 	}
 
-    public List<Object> getReadinessChecks() {
-        return readinessChecks;
-    }
+	public List<Object> getReadinessChecks() {
+		return readinessChecks;
+	}
 
-    public void setReadinessChecks(final List<Object> readinessChecks) {
-        this.readinessChecks = readinessChecks;
-    }
+	public void setReadinessChecks(final List<Object> readinessChecks) {
+		this.readinessChecks = readinessChecks;
+	}
 
 	public UpgradeStrategy getUpgradeStrategy() {
 		return upgradeStrategy;
@@ -454,46 +454,46 @@ public class App {
 	}
 
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final App app = (App) o;
-        return Objects.equals(id, app.id) && Objects.equals(cmd, app.cmd) && Objects.equals(args, app.args) && Objects
-                .equals(user, app.user) && Objects.equals(instances, app.instances) && Objects.equals(cpus, app.cpus)
-                && Objects.equals(mem, app.mem) && Objects.equals(disk, app.disk) && Objects.equals(gpus, app.gpus)
-                && Objects.equals(uris, app.uris) && Objects.equals(constraints, app.constraints) && Objects
-                .equals(acceptedResourceRoles, app.acceptedResourceRoles) && Objects.equals(container, app.container)
-                && Objects.equals(env, app.env) && Objects.equals(labels, app.labels) && Objects
-                .equals(ipAddress, app.ipAddress) && Objects.equals(version, app.version) && Objects
-                .equals(residency, app.residency) && Objects
-                .equals(taskKillGracePeriodSeconds, app.taskKillGracePeriodSeconds) && Objects
-                .equals(secrets, app.secrets) && Objects.equals(executor, app.executor) && Objects
-                .equals(fetch, app.fetch) && Objects.equals(storeUrls, app.storeUrls) && Objects
-                .equals(ports, app.ports) && Objects.equals(portDefinitions, app.portDefinitions) && Objects
-                .equals(requirePorts, app.requirePorts) && Objects.equals(dependencies, app.dependencies) && Objects
-                .equals(backoffSeconds, app.backoffSeconds) && Objects.equals(backoffFactor, app.backoffFactor)
-                && Objects.equals(maxLaunchDelaySeconds, app.maxLaunchDelaySeconds) && Objects.equals(tasks, app.tasks)
-                && Objects.equals(versionInfo, app.versionInfo) && Objects.equals(tasksStaged, app.tasksStaged)
-                && Objects.equals(tasksRunning, app.tasksRunning) && Objects.equals(tasksHealthy, app.tasksHealthy)
-                && Objects.equals(tasksUnhealthy, app.tasksUnhealthy) && Objects.equals(healthChecks, app.healthChecks)
-                && Objects.equals(readinessChecks, app.readinessChecks) && Objects
-                .equals(upgradeStrategy, app.upgradeStrategy) && Objects.equals(deployments, app.deployments) && Objects
-                .equals(lastTaskFailure, app.lastTaskFailure);
-    }
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final App app = (App) o;
+		return Objects.equals(id, app.id) && Objects.equals(cmd, app.cmd) && Objects.equals(args, app.args) && Objects
+				.equals(user, app.user) && Objects.equals(instances, app.instances) && Objects.equals(cpus, app.cpus)
+				&& Objects.equals(mem, app.mem) && Objects.equals(disk, app.disk) && Objects.equals(gpus, app.gpus)
+				&& Objects.equals(uris, app.uris) && Objects.equals(constraints, app.constraints) && Objects
+				.equals(acceptedResourceRoles, app.acceptedResourceRoles) && Objects.equals(container, app.container)
+				&& Objects.equals(env, app.env) && Objects.equals(labels, app.labels) && Objects
+				.equals(ipAddress, app.ipAddress) && Objects.equals(version, app.version) && Objects
+				.equals(residency, app.residency) && Objects
+				.equals(taskKillGracePeriodSeconds, app.taskKillGracePeriodSeconds) && Objects
+				.equals(secrets, app.secrets) && Objects.equals(executor, app.executor) && Objects
+				.equals(fetch, app.fetch) && Objects.equals(storeUrls, app.storeUrls) && Objects
+				.equals(ports, app.ports) && Objects.equals(portDefinitions, app.portDefinitions) && Objects
+				.equals(requirePorts, app.requirePorts) && Objects.equals(dependencies, app.dependencies) && Objects
+				.equals(backoffSeconds, app.backoffSeconds) && Objects.equals(backoffFactor, app.backoffFactor)
+				&& Objects.equals(maxLaunchDelaySeconds, app.maxLaunchDelaySeconds) && Objects.equals(tasks, app.tasks)
+				&& Objects.equals(versionInfo, app.versionInfo) && Objects.equals(tasksStaged, app.tasksStaged)
+				&& Objects.equals(tasksRunning, app.tasksRunning) && Objects.equals(tasksHealthy, app.tasksHealthy)
+				&& Objects.equals(tasksUnhealthy, app.tasksUnhealthy) && Objects.equals(healthChecks, app.healthChecks)
+				&& Objects.equals(readinessChecks, app.readinessChecks) && Objects
+				.equals(upgradeStrategy, app.upgradeStrategy) && Objects.equals(deployments, app.deployments) && Objects
+				.equals(lastTaskFailure, app.lastTaskFailure);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects
-                .hash(id, cmd, args, user, instances, cpus, mem, disk, gpus, uris, constraints, acceptedResourceRoles,
-                        container, env, labels, ipAddress, version, residency, taskKillGracePeriodSeconds, secrets,
-                        executor, fetch, storeUrls, ports, portDefinitions, requirePorts, dependencies, backoffSeconds,
-                        backoffFactor, maxLaunchDelaySeconds, tasks, versionInfo, tasksStaged, tasksRunning,
-                        tasksHealthy, tasksUnhealthy, healthChecks, readinessChecks, upgradeStrategy, deployments,
-                        lastTaskFailure);
-    }
+	@Override
+	public int hashCode() {
+		return Objects
+				.hash(id, cmd, args, user, instances, cpus, mem, disk, gpus, uris, constraints, acceptedResourceRoles,
+						container, env, labels, ipAddress, version, residency, taskKillGracePeriodSeconds, secrets,
+						executor, fetch, storeUrls, ports, portDefinitions, requirePorts, dependencies, backoffSeconds,
+						backoffFactor, maxLaunchDelaySeconds, tasks, versionInfo, tasksStaged, tasksRunning,
+						tasksHealthy, tasksUnhealthy, healthChecks, readinessChecks, upgradeStrategy, deployments,
+						lastTaskFailure);
+	}
 }

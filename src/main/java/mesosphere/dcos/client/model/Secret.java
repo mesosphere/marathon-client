@@ -4,9 +4,6 @@ import mesosphere.client.common.ModelUtils;
 
 import java.util.List;
 
-/**
- * Created by jt018805 on 11/11/16.
- */
 public class Secret {
 
     private String author;

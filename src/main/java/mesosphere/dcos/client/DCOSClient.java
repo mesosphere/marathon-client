@@ -12,9 +12,6 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 
-/**
- * Created by jt018805 on 11/14/16.
- */
 public class DCOSClient {
 
     public static DCOS getInstance(String endpoint) {

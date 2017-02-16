@@ -5,18 +5,18 @@ import java.util.List;
 import mesosphere.client.common.ModelUtils;
 
 public class GetDeploymentsResponse {
-    private List<Deployment> deployments;
+	private List<Deployment> deployments;
 
-    public List<Deployment> getDeployments() {
-        return deployments;
-    }
+	public List<Deployment> getDeployments() {
+		return deployments;
+	}
 
-    public void setDeployments(List<Deployment> deployments) {
-        this.deployments = deployments;
-    }
+	public void setDeployments(List<Deployment> deployments) {
+		this.deployments = deployments;
+	}
 
-    @Override
-    public String toString() {
-        return ModelUtils.toString(this);
-    }
+	@Override
+	public String toString() {
+		return ModelUtils.toString(this);
+	}
 }
