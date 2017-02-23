@@ -57,7 +57,7 @@ public class App {
 	private Double backoffFactor;
 	private Integer maxLaunchDelaySeconds;
 	private Collection<Task> tasks;
-	private VersionInfo versionInfo;
+    private AppVersionInfo versionInfo;
 	private Integer tasksStaged;
 	private Integer tasksRunning;
 	private Integer tasksHealthy;
@@ -368,13 +368,13 @@ public class App {
 		this.tasks = tasks;
 	}
 
-	public VersionInfo getVersionInfo() {
-		return versionInfo;
-	}
+    public AppVersionInfo getVersionInfo() {
+        return versionInfo;
+    }
 
-	public void setVersionInfo(final VersionInfo versionInfo) {
-		this.versionInfo = versionInfo;
-	}
+    public void setVersionInfo(final AppVersionInfo versionInfo) {
+        this.versionInfo = versionInfo;
+    }
 
 	public Integer getTasksStaged() {
 		return tasksStaged;

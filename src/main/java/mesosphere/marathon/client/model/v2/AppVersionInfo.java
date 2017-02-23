@@ -2,7 +2,7 @@ package mesosphere.marathon.client.model.v2;
 
 import mesosphere.client.common.ModelUtils;
 
-public class VersionInfo {
+public class AppVersionInfo {
     private String lastScalingAt;
     private String lastConfigChangeAt;
 
