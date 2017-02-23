@@ -452,48 +452,4 @@ public class App {
 	public String toString() {
 		return ModelUtils.toString(this);
 	}
-
-
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		final App app = (App) o;
-		return Objects.equals(id, app.id) && Objects.equals(cmd, app.cmd) && Objects.equals(args, app.args) && Objects
-				.equals(user, app.user) && Objects.equals(instances, app.instances) && Objects.equals(cpus, app.cpus)
-				&& Objects.equals(mem, app.mem) && Objects.equals(disk, app.disk) && Objects.equals(gpus, app.gpus)
-				&& Objects.equals(uris, app.uris) && Objects.equals(constraints, app.constraints) && Objects
-				.equals(acceptedResourceRoles, app.acceptedResourceRoles) && Objects.equals(container, app.container)
-				&& Objects.equals(env, app.env) && Objects.equals(labels, app.labels) && Objects
-				.equals(ipAddress, app.ipAddress) && Objects.equals(version, app.version) && Objects
-				.equals(residency, app.residency) && Objects
-				.equals(taskKillGracePeriodSeconds, app.taskKillGracePeriodSeconds) && Objects
-				.equals(secrets, app.secrets) && Objects.equals(executor, app.executor) && Objects
-				.equals(fetch, app.fetch) && Objects.equals(storeUrls, app.storeUrls) && Objects
-				.equals(ports, app.ports) && Objects.equals(portDefinitions, app.portDefinitions) && Objects
-				.equals(requirePorts, app.requirePorts) && Objects.equals(dependencies, app.dependencies) && Objects
-				.equals(backoffSeconds, app.backoffSeconds) && Objects.equals(backoffFactor, app.backoffFactor)
-				&& Objects.equals(maxLaunchDelaySeconds, app.maxLaunchDelaySeconds) && Objects.equals(tasks, app.tasks)
-				&& Objects.equals(versionInfo, app.versionInfo) && Objects.equals(tasksStaged, app.tasksStaged)
-				&& Objects.equals(tasksRunning, app.tasksRunning) && Objects.equals(tasksHealthy, app.tasksHealthy)
-				&& Objects.equals(tasksUnhealthy, app.tasksUnhealthy) && Objects.equals(healthChecks, app.healthChecks)
-				&& Objects.equals(readinessChecks, app.readinessChecks) && Objects
-				.equals(upgradeStrategy, app.upgradeStrategy) && Objects.equals(deployments, app.deployments) && Objects
-				.equals(lastTaskFailure, app.lastTaskFailure);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects
-				.hash(id, cmd, args, user, instances, cpus, mem, disk, gpus, uris, constraints, acceptedResourceRoles,
-						container, env, labels, ipAddress, version, residency, taskKillGracePeriodSeconds, secrets,
-						executor, fetch, storeUrls, ports, portDefinitions, requirePorts, dependencies, backoffSeconds,
-						backoffFactor, maxLaunchDelaySeconds, tasks, versionInfo, tasksStaged, tasksRunning,
-						tasksHealthy, tasksUnhealthy, healthChecks, readinessChecks, upgradeStrategy, deployments,
-						lastTaskFailure);
-	}
 }
