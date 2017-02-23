@@ -6,9 +6,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * @author Will Gorman
- */
 public class GetAppNamespaceResponse {
     @SerializedName("*")
     private List<App> apps;
