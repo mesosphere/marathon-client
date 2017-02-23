@@ -6,7 +6,7 @@ import mesosphere.client.common.ModelUtils;
 
 public class Task {
     private String id;
-    private String slaveId;
+    private String agentId;
     private String host;
     private String state;
     private String startedAt;
@@ -26,12 +26,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getSlaveId() {
-        return slaveId;
+    public String getAgentId() {
+        return agentId;
     }
 
-    public void setSlaveId(String slaveId) {
-        this.slaveId = slaveId;
+    public void setAgentId(String agentId) {
+        this.agentId = agentId;
     }
 
     public String getHost() {
