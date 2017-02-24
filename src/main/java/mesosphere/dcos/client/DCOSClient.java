@@ -11,30 +11,30 @@ import mesosphere.dcos.client.model.DCOSAuthCredentials;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class DCOSClient {
     public static final String DCOS_CLIENT_USER_AGENT = "dcos/client";
 
     public static DCOS getInstance(String endpoint) {
-        return getInstance(endpoint, null);
+        return buildInstance(endpoint, b -> {});
     }
 
     public static DCOS getInstance(String endpoint, final DCOSAuthCredentials authCredentials) {
+        return buildInstance(endpoint, b ->
+                b.requestInterceptor(new DCOSAuthTokenHeaderInterceptor(authCredentials, getInstance(endpoint))));
+    }
 
+    private static DCOS buildInstance(String endpoint, Consumer<Feign.Builder> customize) {
         GsonDecoder decoder = new GsonDecoder(ModelUtils.GSON);
         GsonEncoder encoder = new GsonEncoder(ModelUtils.GSON);
 
         Feign.Builder builder = Feign.builder()
-                .encoder(encoder)
-                .decoder(decoder)
-                .errorDecoder(new DCOSErrorDecoder());
-
-        if (authCredentials != null) {
-            // Need to use a non-authenticated DCOSClient instance to perform the authorization and token refresh,
-            // unfortunately.
-            builder.requestInterceptor(new DCOSAPIInterceptor()).requestInterceptor(
-                    new DCOSAuthTokenHeaderInterceptor(authCredentials, getInstance(endpoint)));
-        }
+                                     .encoder(encoder)
+                                     .decoder(decoder)
+                                     .errorDecoder(new DCOSErrorDecoder());
+        customize.accept(builder);
+        builder.requestInterceptor(new DCOSAPIInterceptor());
 
         return builder.target(DCOS.class, endpoint);
     }
