@@ -1,312 +1,244 @@
 package mesosphere.dcos.client;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import feign.Headers;
 import feign.Param;
-import feign.QueryMap;
 import feign.RequestLine;
+import mesosphere.client.common.ClientUtils;
 import mesosphere.client.common.ThrowingSupplier;
 import mesosphere.dcos.client.model.AuthenticateResponse;
 import mesosphere.dcos.client.model.DCOSAuthCredentials;
 import mesosphere.dcos.client.model.Secret;
+import mesosphere.marathon.client.Marathon;
+import mesosphere.marathon.client.MarathonClient;
 import mesosphere.marathon.client.model.v2.App;
 import mesosphere.marathon.client.model.v2.DeleteAppTasksResponse;
 import mesosphere.marathon.client.model.v2.DeleteTaskCriteria;
-import mesosphere.marathon.client.model.v2.Deployment;
 import mesosphere.marathon.client.model.v2.GetAbdicateLeaderResponse;
 import mesosphere.marathon.client.model.v2.GetAppNamespaceResponse;
-import mesosphere.marathon.client.model.v2.GetAppResponse;
-import mesosphere.marathon.client.model.v2.GetAppTasksResponse;
 import mesosphere.marathon.client.model.v2.GetAppVersionResponse;
-import mesosphere.marathon.client.model.v2.GetAppsResponse;
 import mesosphere.marathon.client.model.v2.GetEventSubscriptionRegisterResponse;
 import mesosphere.marathon.client.model.v2.GetEventSubscriptionsResponse;
-import mesosphere.marathon.client.model.v2.GetServerInfoResponse;
 import mesosphere.marathon.client.model.v2.GetLeaderResponse;
 import mesosphere.marathon.client.model.v2.GetMetricsResponse;
 import mesosphere.marathon.client.model.v2.GetPluginsResponse;
+import mesosphere.marathon.client.model.v2.GetServerInfoResponse;
 import mesosphere.marathon.client.model.v2.GetTasksResponse;
 import mesosphere.marathon.client.model.v2.Group;
-import mesosphere.marathon.client.model.v2.Queue;
 import mesosphere.marathon.client.model.v2.Result;
 
 @Headers({ "Content-Type: application/json", "Accept: application/json" })
-public interface DCOS {
-
+public interface DCOS extends Marathon {
     // DCOS Auth
     @RequestLine("GET /acs/api/v1/auth/login")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + DCOSClient.DCOS_CLIENT_USER_AGENT)
     AuthenticateResponse authenticate(DCOSAuthCredentials credentials);
 
     // DCOS Secrets
     @RequestLine("GET /secrets/v1/secret/{secretStore}/{secretPath}")
-    Secret getSecret(@Param("secretStore") String secretStore, @Param("secretPath") String secretPath)
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + DCOSClient.DCOS_CLIENT_USER_AGENT)
+    Secret getSecret(@Param("secretStore") String secretStore,
+                     @Param("secretPath") String secretPath)
             throws DCOSException;
 
     // Apps
-    @RequestLine("GET /marathon/v2/apps")
-    GetAppsResponse getApps() throws DCOSException;
-
     /**
      * @param namespace - All apps under this group/subgroups will be returned. Example "/products/us-east"
      * @return
      * @throws DCOSException
      */
     @RequestLine("GET /marathon/v2/apps/{namespace}/*")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetAppNamespaceResponse getApps(@Param("namespace") String namespace) throws DCOSException;
 
-    /**
-     * @param namespace - All apps under this group/subgroups will be returned. Example "/products/us-east" * @param
-     * @param queryMap - Map of query parameters
-     * @return
-     * @throws DCOSException
-     */
-    @RequestLine("GET /marathon/v2/apps/{namespace}/*")
-    GetAppNamespaceResponse getApps(@Param("namespace") String namespace, @QueryMap Map<String, String> queryMap)
+    @RequestLine("DELETE /marathon/v2/apps/{appId}?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    Result deleteApp(@Param("appId") String appId,
+                     @Param("force") boolean force)
             throws DCOSException;
 
-    @RequestLine("GET /marathon/v2/apps")
-    GetAppsResponse getApp(@QueryMap Map<String, String> queryMap)
-            throws DCOSException;
-
-    @RequestLine("PUT /marathon/v2/apps")
-    Result modifyApp(List<App> apps) throws DCOSException;
-
-    @RequestLine("PUT /marathon/v2/apps?force=true")
-    Result forceModifyApp(List<App> apps) throws DCOSException;
-
-    @RequestLine("POST /marathon/v2/apps")
-    App createApp(App app) throws DCOSException;
-
-    @RequestLine("GET /marathon/v2/apps/{appId}")
-    GetAppResponse getApp(@Param("appId") String appId) throws DCOSException;
-
-    @RequestLine("PUT /marathon/v2/apps/{appId}")
-    Result modifyApp(@Param("appId") String appId, App app) throws DCOSException;
-
-    @RequestLine("PUT /marathon/v2/apps/{appId}?force=true")
-    Result forceModifyApp(@Param("appId") String appId, App app)
-            throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}")
-    Result deleteApp(@Param("appId") String appId) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}?force=true")
-    Result forceDeleteApp(@Param("appId") String appId) throws DCOSException;
-
-    @RequestLine("PUT /marathon/v2/apps/{appId}/restart")
-    Result restartApp(@Param("appId") String appId, App app) throws DCOSException;
-
-    @RequestLine("PUT /marathon/v2/apps/{appId}/restart?force=true")
-    Result forceRestartApp(@Param("appId") String appId, App app)
-            throws DCOSException;
-
-    @RequestLine("GET /marathon/v2/apps/{appId}/tasks")
-    GetAppTasksResponse getAppTasks(@Param("appId") String appId)
-            throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}")
+    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}&force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     DeleteAppTasksResponse deleteAppTasksWithHost(@Param("appId") String appId,
-                                                  @Param("host") String host)
+                                                  @Param("host") String host,
+                                                  @Param("force") boolean force)
             throws DCOSException;
 
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}&force=true")
-    DeleteAppTasksResponse forceDeleteAppTasksWithHost(@Param("appId") String appId,
-            @Param("host") String host)
-            throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}&scale=true")
+    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}&force={force}&scale=true")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     Result deleteAppTasksAndScaleWithHost(@Param("appId") String appId,
-            @Param("host") String host)
+                                          @Param("host") String host,
+                                          @Param("force") boolean force)
             throws DCOSException;
 
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}&force=true&scale=true")
-    Result forceDeleteAppTasksAndScaleWithHost(@Param("appId") String appId,
-            @Param("host") String host)
-            throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}&wipe=true")
+    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}&force={force}&wipe=true")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     DeleteAppTasksResponse deleteAppTasksAndWipeWithHost(@Param("appId") String appId,
-            @Param("host") String host)
+                                                         @Param("host") String host,
+                                                         @Param("force") boolean force)
             throws DCOSException;
 
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks?host={host}&force=true&wipe=true")
-    DeleteAppTasksResponse forceDeleteAppTasksAndWipeWithHost(@Param("appId") String appId,
-            @Param("host") String host)
-            throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}")
+    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     DeleteAppTasksResponse deleteAppTasksWithTaskId(@Param("appId") String appId,
-            @Param("taskId") String taskId) throws DCOSException;
+                                                    @Param("taskId") String taskId,
+                                                    @Param("force") boolean force)
+            throws DCOSException;
 
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}?force=true")
-    DeleteAppTasksResponse forceDeleteAppTasksWithTaskId(@Param("appId") String appId,
-            @Param("taskId") String taskId) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}?scale=true")
+    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}?force={force}&scale=true")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     Result deleteAppTasksAndScaleWithTaskId(@Param("appId") String appId,
-            @Param("taskId") String taskId) throws DCOSException;
+                                            @Param("taskId") String taskId,
+                                            @Param("force") boolean force)
+            throws DCOSException;
 
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}?force=true&scale=true")
-    Result forceDeleteAppTasksAndScaleWithTaskId(@Param("appId") String appId,
-            @Param("taskId") String taskId) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}?wipe=true")
+    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}?force={force}&wipe=true")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     DeleteAppTasksResponse deleteAppTasksAndWipeWithTaskId(@Param("appId") String appId,
-            @Param("taskId") String taskId) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/apps/{appId}/tasks/{taskId}?force=true&wipe=true")
-    DeleteAppTasksResponse forceDeleteAppTasksAndWipeWithTaskId(@Param("appId") String appId,
-            @Param("taskId") String taskId) throws DCOSException;
+                                                           @Param("taskId") String taskId,
+                                                           @Param("force") boolean force)
+            throws DCOSException;
 
     @RequestLine("GET /marathon/v2/apps/{appId}/versions")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetAppVersionResponse getAppVersion(@Param("id") String appId) throws DCOSException;
 
     @RequestLine("GET /marathon/v2/apps/{appId}/versions/{version}")
-    App getAppVersion(@Param("appId") String appId, @Param("version") String version) throws DCOSException;
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    App getAppVersion(@Param("appId") String appId,
+                      @Param("version") String version)
+            throws DCOSException;
 
     // Deployments
-    @RequestLine("GET /marathon/v2/deployments")
-    List<Deployment> getDeployments() throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/deployments/{deploymentId}")
+    @RequestLine("DELETE /marathon/v2/deployments/{deploymentId}?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     Result deleteDeployment(@Param("deploymentId") String id) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/deployments/{deploymentId}?force=true")
-    Result forceDeleteDeployment(@Param("deploymentId") String id) throws DCOSException;
 
     // Groups
     @RequestLine("GET /marathon/v2/groups")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     Group getGroups() throws DCOSException;
 
-    @RequestLine("PUT /marathon/v2/groups")
-    Result modifyGroup(Group group) throws DCOSException;
+    @RequestLine("PUT /marathon/v2/groups?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    Result modifyGroup(@Param("force") boolean force, Group group) throws DCOSException;
 
-    @RequestLine("PUT /marathon/v2/groups?force=true")
-    Result forceModifyGroup(Group group) throws DCOSException;
+    @RequestLine("POST /marathon/v2/groups?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    Result createGroup(@Param("force") boolean force, Group group) throws DCOSException;
 
-    @RequestLine("POST /marathon/v2/groups")
-    Result createGroup(Group group) throws DCOSException;
-
-    @RequestLine("POST /marathon/v2/groups?force=true")
-    Result forceCreateGroup(Group group) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/groups")
-    Result deleteGroup() throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/groups?force=true")
-    Result forceDeleteGroup() throws DCOSException;
+    @RequestLine("DELETE /marathon/v2/groups?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    Result deleteGroup(@Param("force") boolean force) throws DCOSException;
 
     @RequestLine("GET /marathon/v2/groups/versions")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     List<String> getGroupVersion() throws DCOSException;
 
-    @RequestLine("GET /marathon/v2/groups/{id}")
-    Group getGroup(@Param("id") String id) throws DCOSException;
+    @RequestLine("PUT /marathon/v2/groups/{id}?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    Group modifyGroups(@Param("id") String id,
+                       @Param("force") boolean force)
+            throws DCOSException;
 
-    @RequestLine("PUT /marathon/v2/groups/{id}")
-    Group modifyGroups(@Param("id") String id) throws DCOSException;
+    @RequestLine("POST /marathon/v2/groups/{id}?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    Group createGroups(@Param("id") String id,
+                       @Param("force") boolean force)
+            throws DCOSException;
 
-    @RequestLine("PUT /marathon/v2/groups/{id}?force=true")
-    Group forceModifyGroup(@Param("id") String id) throws DCOSException;
-
-    @RequestLine("POST /marathon/v2/groups/{id}")
-    Group createGroup(@Param("id") String id) throws DCOSException;
-
-    @RequestLine("POST /marathon/v2/groups/{id}?force=true")
-    Group forceCreateGroup(@Param("id") String id) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/groups/{id}")
-    Result deleteGroup(@Param("id") String id) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/groups/{id}")
-    Result forceDeleteGroup(@Param("id") String id) throws DCOSException;
+    @RequestLine("DELETE /marathon/v2/groups/{id}?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    Result deleteGroups(@Param("id") String id,
+                        @Param("force") boolean force)
+            throws DCOSException;
 
     @RequestLine("GET /marathon/v2/groups/{id}/versions")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     Result getGroupVersion(@Param("id") String id) throws DCOSException;
 
     // Tasks
-    @RequestLine("GET /marathon/v2/tasks")
-    GetTasksResponse getTasks() throws DCOSException;
-
     @RequestLine("GET /marathon/v2/tasks?status={status}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetTasksResponse getTasks(@Param("status") String status) throws DCOSException;
 
-    @RequestLine("DELETE /marathon/v2/tasks/delete")
-    GetTasksResponse deleteTask(DeleteTaskCriteria deleteTaskBody) throws DCOSException;
+    @RequestLine("DELETE /marathon/v2/tasks/delete?force={force}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    GetTasksResponse deleteTask(@Param("force") boolean force, DeleteTaskCriteria deleteTaskBody) throws DCOSException;
 
-    @RequestLine("DELETE /marathon/v2/tasks/delete?force=true")
-    GetTasksResponse forceDeleteTask(DeleteTaskCriteria deleteTaskBody) throws DCOSException;
+    @RequestLine("DELETE /marathon/v2/tasks/delete?force={force}&scale=true")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    GetTasksResponse deleteTaskAndScale(@Param("force") boolean force, DeleteTaskCriteria deleteTaskBody)
+            throws DCOSException;
 
-    @RequestLine("DELETE /marathon/v2/tasks/delete?scale=true")
-    GetTasksResponse deleteTaskAndScale(DeleteTaskCriteria deleteTaskBody) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/tasks/delete?force=true&scale=true")
-    GetTasksResponse forceDeleteTaskAndScale(DeleteTaskCriteria deleteTaskBody) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/tasks/delete?wipe=true")
-    GetTasksResponse deleteTaskAndWipe(DeleteTaskCriteria deleteTaskBody) throws DCOSException;
-
-    @RequestLine("DELETE /marathon/v2/tasks/delete?force=true&wipe=true")
-    GetTasksResponse forceDeleteTaskAndWipe(DeleteTaskCriteria deleteTaskBody) throws DCOSException;
-
-    // Artifacts
-    // TODO can we or even should we support Artifacts?
-
-    // Events
-    // @RequestLine("GET /v2/events")
-    // Object getEvents() throws DCOSException;
+    @RequestLine("DELETE /marathon/v2/tasks/delete?force={force}&wipe=true")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
+    GetTasksResponse deleteTaskAndWipe(@Param("force") boolean force, DeleteTaskCriteria deleteTaskBody)
+            throws DCOSException;
 
     // Event Subscriptions
     @RequestLine("GET /marathon/v2/eventSubscriptions")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetEventSubscriptionsResponse getSubscriptions() throws DCOSException;
 
     @RequestLine("POST /marathon/v2/eventSubscriptions?callbackUrl={url}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetEventSubscriptionRegisterResponse postSubscriptions(@Param("url") String url) throws DCOSException;
 
     @RequestLine("DELETE /marathon/v2/eventSubscriptions?callbackUrl={url}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetEventSubscriptionRegisterResponse deleteSubscriptions(@Param("url") String url) throws DCOSException;
 
     // Server Info
     @RequestLine("GET /marathon/v2/info")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetServerInfoResponse getInfo() throws DCOSException;
 
     // GetLeaderResponse
     @RequestLine("GET /marathon/v2/leader")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetLeaderResponse getLeader() throws DCOSException;
 
     @RequestLine("DELETE /marathon/v2/leader")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetAbdicateLeaderResponse deleteLeader() throws DCOSException;
 
     // Plugins
     @RequestLine("GET /marathon/v2/plugins")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetPluginsResponse getPlugin() throws DCOSException;
 
     @RequestLine("GET /marathon/v2/plugins/{pluginId}/{path}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     void getPlugin(@Param("pluginId") String pluginId, @Param("path") String path) throws DCOSException;
 
     @RequestLine("PUT /marathon/v2/plugins/{pluginId}/{path}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     void putPlugin(@Param("pluginId") String pluginId, @Param("path") String path) throws DCOSException;
 
     @RequestLine("POST /marathon/v2/plugins/{pluginId}/{path}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     void postPlugin(@Param("pluginId") String pluginId, @Param("path") String path) throws DCOSException;
 
     @RequestLine("DELETE /marathon/v2/plugins/{pluginId}/{path}")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     void deletePlugin(@Param("pluginId") String pluginId, @Param("path") String path) throws DCOSException;
 
     // Queue
-    @RequestLine("GET /marathon/v2/queue")
-    Queue getQueue() throws DCOSException;
 
     @RequestLine("DELETE /marathon/v2/queue/{appId}/delay")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     void deleteQueueDelay(@Param("appId") String appId) throws DCOSException;
 
     // Miscellaneous
     @RequestLine("GET /marathon/ping")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     String getPing() throws DCOSException;
 
     @RequestLine("GET /marathon/metrics")
+    @Headers(ClientUtils.API_SOURCE_HEADER + ": " + MarathonClient.MARATHON_CLIENT_USER_AGENT)
     GetMetricsResponse getMetrics() throws DCOSException;
 
     // Convenience methods for identifiable resources.
@@ -324,78 +256,6 @@ public interface DCOS {
 
     default Optional<GetAppNamespaceResponse> maybeApps(final String namespace) throws DCOSException {
         return resource(() -> getApps(namespace));
-    }
-
-    default DeleteAppTasksResponse deleteAppTasksWithTaskId(String appId, String taskId, boolean force) throws DCOSException {
-        if (force) {
-            return deleteAppTasksWithTaskId(appId, taskId);
-        } else {
-            return forceDeleteAppTasksWithTaskId(appId, taskId);
-        }
-    }
-
-    default Result deleteAppTasksAndScaleWithTaskId(String appId, String taskId, boolean force) throws DCOSException {
-        if (force) {
-            return deleteAppTasksAndScaleWithTaskId(appId, taskId);
-        } else {
-            return forceDeleteAppTasksAndScaleWithTaskId(appId, taskId);
-        }
-    }
-
-    default DeleteAppTasksResponse deleteAppTasksAndWipeWithTaskId(String appId, String taskId, boolean force) throws DCOSException {
-        if (force) {
-            return deleteAppTasksAndWipeWithTaskId(appId, taskId);
-        } else {
-            return forceDeleteAppTasksAndWipeWithTaskId(appId, taskId);
-        }
-    }
-
-    default DeleteAppTasksResponse deleteAppTasksFromHost(String appId, String host, boolean force) throws DCOSException {
-        if (force) {
-            return deleteAppTasksWithHost(appId, host);
-        } else {
-            return forceDeleteAppTasksWithHost(appId, host);
-        }
-    }
-
-    default Result deleteAppTasksAndScaleFromHost(String appId, String host, boolean force) throws DCOSException {
-        if (force) {
-            return deleteAppTasksAndScaleWithHost(appId, host);
-        } else {
-            return forceDeleteAppTasksAndScaleWithHost(appId, host);
-        }
-    }
-
-    default DeleteAppTasksResponse deleteAppTasksAndWipeFromHost(String appId, String host, boolean force) throws DCOSException {
-        if (force) {
-            return deleteAppTasksAndWipeWithHost(appId, host);
-        } else {
-            return forceDeleteAppTasksAndWipeWithHost(appId, host);
-        }
-    }
-
-    default GetTasksResponse deleteTask(DeleteTaskCriteria deleteTaskBody, boolean force) throws DCOSException {
-        if (force) {
-            return forceDeleteTask(deleteTaskBody);
-        } else {
-            return deleteTask(deleteTaskBody);
-        }
-    }
-
-    default GetTasksResponse deleteTaskAndWipe(DeleteTaskCriteria deleteTaskBody, boolean force) throws DCOSException {
-        if (force) {
-            return forceDeleteTaskAndWipe(deleteTaskBody);
-        } else {
-            return deleteTaskAndWipe(deleteTaskBody);
-        }
-    }
-
-    default GetTasksResponse deleteTaskAndScale(DeleteTaskCriteria deleteTaskBody, boolean force) throws DCOSException {
-        if (force) {
-            return forceDeleteTaskAndScale(deleteTaskBody);
-        } else {
-            return deleteTaskAndScale(deleteTaskBody);
-        }
     }
 
     /**

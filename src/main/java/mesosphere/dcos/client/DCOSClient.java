@@ -13,6 +13,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 
 public class DCOSClient {
+    public static final String DCOS_CLIENT_USER_AGENT = "dcos/client";
 
     public static DCOS getInstance(String endpoint) {
         return getInstance(endpoint, null);
@@ -31,7 +32,7 @@ public class DCOSClient {
         if (authCredentials != null) {
             // Need to use a non-authenticated DCOSClient instance to perform the authorization and token refresh,
             // unfortunately.
-            builder.requestInterceptor(
+            builder.requestInterceptor(new DCOSAPIInterceptor()).requestInterceptor(
                     new DCOSAuthTokenHeaderInterceptor(authCredentials, getInstance(endpoint)));
         }
 

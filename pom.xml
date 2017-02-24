@@ -26,6 +26,11 @@
 			<version>${gson-version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava-version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
 			<version>2.2.1</version>
@@ -93,6 +98,7 @@
 		<feign-version>8.18.0</feign-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gson-version>2.5</gson-version>
+		<guava-version>20.0</guava-version>
 		<junit-version>4.11</junit-version>
 		<mockweb-version>3.5.0</mockweb-version>
 	</properties>
