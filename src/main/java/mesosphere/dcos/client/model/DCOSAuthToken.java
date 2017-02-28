@@ -1,33 +1,27 @@
 package mesosphere.dcos.client.model;
 
-import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Instant;
-import java.util.Base64;
 
-import com.google.gson.JsonParser;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 
 import mesosphere.client.common.ModelUtils;
 
 public class DCOSAuthToken {
 
     private final String token;
-    private final Instant expiry;
+    private final JWTClaimsSet jWTClaimsSet;
     private final transient Clock clock;
 
     /**
      * Package-private visibility for testing.
      * @param token
-     * @param clock
      */
-    DCOSAuthToken(final String token, final Clock clock) {
-        this.clock = clock;
+    public DCOSAuthToken(final String token) throws java.text.ParseException {
+        this.clock = Clock.systemUTC();
         this.token = token;
-        expiry = extractExpiry(token);
-    }
-
-    public DCOSAuthToken(final String token) {
-        this(token, Clock.systemUTC());
+        jWTClaimsSet = SignedJWT.parse(token).getJWTClaimsSet();
     }
 
     public String getToken() {
@@ -36,26 +30,7 @@ public class DCOSAuthToken {
 
     public boolean requiresRefresh() {
         // Uh, just do it a day ahead, why not?
-        return Instant.now(clock)
-                      .plusSeconds(86400)
-                      .isAfter(expiry);
-    }
-
-    public Instant getExpiry() {
-        return expiry;
-    }
-
-    private static Instant extractExpiry(final String token) {
-        // TODO no real error handling here.
-        String[] parts = token.split("\\.");
-        String epochTime = new JsonParser().parse(new String(Base64.getDecoder()
-                                                                   .decode(parts[1]),
-                StandardCharsets.ISO_8859_1))
-                                           .getAsJsonObject()
-                                           .getAsJsonPrimitive("exp")
-                                           .getAsString();
-
-        return Instant.ofEpochSecond(Long.parseLong(epochTime));
+        return jWTClaimsSet.getExpirationTime().toInstant().isBefore(Instant.now(clock).plusSeconds(86400L));
     }
 
     @Override

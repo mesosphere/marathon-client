@@ -31,11 +31,6 @@
 			<version>${guava-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.auth0</groupId>
-			<artifactId>java-jwt</artifactId>
-			<version>2.2.1</version>
-		</dependency>
-		<dependency>
 			<groupId>net.oauth.core</groupId>
 			<artifactId>oauth</artifactId>
 			<version>20100527</version>
@@ -44,6 +39,11 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>4.23</version>
 		</dependency>
 		<!-- Test dependencies -->
 		<dependency>

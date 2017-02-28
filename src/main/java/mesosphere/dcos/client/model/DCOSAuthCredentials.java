@@ -6,12 +6,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
-import com.auth0.jwt.Algorithm;
-import com.auth0.jwt.JWTSigner;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JOSEObjectType;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.crypto.RSASSASigner;
+import com.nimbusds.jwt.JWTClaimsSet;
 
 import mesosphere.client.common.ModelUtils;
 import net.oauth.signature.pem.PEMReader;
@@ -71,12 +73,14 @@ public class DCOSAuthCredentials {
     }
 
     private static String signJWT(String uid, PrivateKey privateKey) {
-        final Map<String, Object> claims = new HashMap<>();
-        claims.put("uid", uid);
-        final JWTSigner.Options options = new JWTSigner.Options();
-        options.setAlgorithm(Algorithm.RS256);
-        JWTSigner signer = new JWTSigner(privateKey);
-        return signer.sign(claims, options);
+        final JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build();
+        final JWTClaimsSet payload = new JWTClaimsSet.Builder().claim("uid", uid).build();
+
+        try {
+            return new RSASSASigner(privateKey).sign(header, payload.toJSONObject().toJSONString().getBytes()).toJSONString();
+        } catch (JOSEException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
