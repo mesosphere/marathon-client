@@ -12,14 +12,12 @@ public class DCOSAuthToken {
 
     private final String token;
     private final JWTClaimsSet jWTClaimsSet;
-    private final transient Clock clock;
 
     /**
      * Package-private visibility for testing.
      * @param token
      */
     public DCOSAuthToken(final String token) throws java.text.ParseException {
-        this.clock = Clock.systemUTC();
         this.token = token;
         jWTClaimsSet = SignedJWT.parse(token).getJWTClaimsSet();
     }
@@ -30,7 +28,7 @@ public class DCOSAuthToken {
 
     public boolean requiresRefresh() {
         // Uh, just do it a day ahead, why not?
-        return jWTClaimsSet.getExpirationTime().toInstant().isBefore(Instant.now(clock).plusSeconds(86400L));
+        return jWTClaimsSet.getExpirationTime().toInstant().isBefore(Instant.now(Clock.systemUTC()).plusSeconds(86400L));
     }
 
     @Override

@@ -10,6 +10,8 @@ public class Port {
     private Integer hostPort;
     private Integer servicePort;
     private String protocol;
+    private String name;
+
     private Map<String, String> labels = new HashMap<>();
 
     public Integer getContainerPort() {
@@ -42,6 +44,14 @@ public class Port {
 
     public void setProtocol(String protocol) {
         this.protocol = protocol;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

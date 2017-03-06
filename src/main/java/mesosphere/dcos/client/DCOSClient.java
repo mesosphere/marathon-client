@@ -14,13 +14,13 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 public class DCOSClient {
-    public static final String DCOS_CLIENT_USER_AGENT = "dcos/client";
-
     public static DCOS getInstance(String endpoint) {
         return buildInstance(endpoint, b -> {});
     }
 
     public static DCOS getInstance(String endpoint, final DCOSAuthCredentials authCredentials) {
+        // Need to use a non-authenticated DCOSClient instance to perform the authorization and token refresh to avoid
+        // the complexity of synchronizing around checking whether a token needs to be refreshed.
         return buildInstance(endpoint, b ->
                 b.requestInterceptor(new DCOSAuthTokenHeaderInterceptor(authCredentials, getInstance(endpoint))));
     }
@@ -46,7 +46,7 @@ public class DCOSClient {
             String details;
             try {
                 details = IOUtils.toString(response.body().asInputStream(), "UTF-8");
-            } catch (IOException e) {
+            } catch (NullPointerException | IOException e) {
                 details = "Unable to read response body";
             }
             return new DCOSException(response.status(), response.reason(), methodKey, details);

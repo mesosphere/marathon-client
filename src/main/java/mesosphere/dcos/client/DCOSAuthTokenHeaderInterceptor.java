@@ -23,8 +23,7 @@ public class DCOSAuthTokenHeaderInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate template) {
         if (dcosAuthToken == null || dcosAuthToken.requiresRefresh()) {
-            dcosAuthToken = dcosClient.authenticate(authCredentials)
-                    .toDCOSAuthToken();
+            dcosAuthToken = dcosClient.authenticate(authCredentials).toDCOSAuthToken();
         }
 
         template.header("Authorization", "token=" + dcosAuthToken.getToken());

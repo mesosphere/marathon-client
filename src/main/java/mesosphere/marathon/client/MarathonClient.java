@@ -15,8 +15,6 @@ import feign.gson.GsonEncoder;
 import static java.util.Arrays.asList;
 
 public class MarathonClient {
-	public static final String MARATHON_CLIENT_USER_AGENT = "marathon/client";
-
 	static class MarathonHeadersInterceptor implements RequestInterceptor {
 		@Override
 		public void apply(RequestTemplate template) {

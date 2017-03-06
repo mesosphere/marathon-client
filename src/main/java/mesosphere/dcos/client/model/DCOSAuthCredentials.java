@@ -14,6 +14,7 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 
 import mesosphere.client.common.ModelUtils;
 import net.oauth.signature.pem.PEMReader;
@@ -64,9 +65,8 @@ public class DCOSAuthCredentials {
 
     private static PrivateKey parsePrivateKey(final String key)
             throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        final PEMReader pemReader = new PEMReader(key.getBytes());
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(pemReader.getDerBytes());
-        // i assume RSA is always what DC/OS uses since examples in their doc don't show other algorithms
+        final PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(new PEMReader(key.getBytes()).getDerBytes());
+        // I assume RSA is always what DC/OS uses since examples in their doc don't show other algorithms
         // and so this is not configurable
         final KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePrivate(keySpec);
@@ -75,9 +75,11 @@ public class DCOSAuthCredentials {
     private static String signJWT(String uid, PrivateKey privateKey) {
         final JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.RS256).type(JOSEObjectType.JWT).build();
         final JWTClaimsSet payload = new JWTClaimsSet.Builder().claim("uid", uid).build();
+        final SignedJWT signedJWT = new SignedJWT(header, payload);
 
         try {
-            return new RSASSASigner(privateKey).sign(header, payload.toJSONObject().toJSONString().getBytes()).toJSONString();
+            signedJWT.sign(new RSASSASigner(privateKey));
+            return signedJWT.serialize();
         } catch (JOSEException e) {
             throw new RuntimeException(e);
         }

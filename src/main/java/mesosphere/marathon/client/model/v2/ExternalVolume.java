@@ -57,6 +57,43 @@ public class ExternalVolume extends Volume {
         this.externalVolumeInfo.options.overwriteFs = overwriteFs;
     }
 
+    public String getName() {
+        return this.externalVolumeInfo.name;
+    }
+
+    public String getProvider() {
+        return this.externalVolumeInfo.provider;
+    }
+
+    public Integer getSize() {
+        return this.externalVolumeInfo.size;
+    }
+
+    public String getDriver() {
+        return this.externalVolumeInfo.options.driver;
+    }
+
+    public Integer getOptSize() {
+        return this.externalVolumeInfo.options.size;
+    }
+
+    public Integer getOptIops() {
+        return this.externalVolumeInfo.options.iops;
+    }
+
+    public String getOptVolumeType() {
+        return this.externalVolumeInfo.options.volumeType;
+    }
+
+    public String getOptNewFsType() {
+        return this.externalVolumeInfo.options.newFsType;
+    }
+
+    public Boolean getOptOverwriteFs() {
+        return this.externalVolumeInfo.options.overwriteFs;
+    }
+
+
     @Override
     public String toString() {
         return ModelUtils.toString(this);

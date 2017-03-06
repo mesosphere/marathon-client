@@ -47,8 +47,8 @@ public class App {
 	private Integer taskKillGracePeriodSeconds;
 	private Map<String, Object> secrets;
 	private String executor;
-	private List<String> fetch;
-	private List<String> storeUrls;
+    private List<Fetchable> fetch;
+    private List<String> storeUrls;
 	private List<Integer> ports;
 	private List<PortDefinition> portDefinitions;
 	private Boolean requirePorts;
@@ -265,13 +265,13 @@ public class App {
 		this.executor = executor;
 	}
 
-	public List<String> getFetch() {
-		return fetch;
-	}
+    public List<Fetchable> getFetch() {
+        return fetch;
+    }
 
-	public void setFetch(final List<String> fetch) {
-		this.fetch = fetch;
-	}
+    public void setFetch(final List<Fetchable> fetch) {
+        this.fetch = fetch;
+    }
 
 	public List<String> getStoreUrls() {
 		return storeUrls;
