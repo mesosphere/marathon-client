@@ -45,7 +45,7 @@ public class App {
 	private String version;
 	private String residency;
 	private Integer taskKillGracePeriodSeconds;
-	private Map<String, Object> secrets;
+	private Map<String, SecretSource> secrets;
 	private String executor;
     private List<Fetchable> fetch;
     private List<String> storeUrls;
@@ -240,11 +240,11 @@ public class App {
 		this.taskKillGracePeriodSeconds = taskKillGracePeriodSeconds;
 	}
 
-	public Map<String, Object> getSecrets() {
+	public Map<String, SecretSource> getSecrets() {
 		return secrets;
 	}
 
-	public void setSecrets(final Map<String, Object> secrets) {
+	public void setSecrets(final Map<String, SecretSource> secrets) {
 		this.secrets = secrets;
 	}
 
