@@ -2,7 +2,7 @@ package mesosphere.marathon.client.model.v2;
 
 import java.util.Collection;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 public class GetTasksResponse {
 	private Collection<Task> tasks;

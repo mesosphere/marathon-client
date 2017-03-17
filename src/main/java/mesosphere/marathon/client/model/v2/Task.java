@@ -2,84 +2,120 @@ package mesosphere.marathon.client.model.v2;
 
 import java.util.Collection;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 public class Task {
-	private String host;
-	private String id;
-	private String appId;
-	private Collection<Integer> ports;
-	private String stagedAt;
-	private String startedAt;
-	private Collection<HealthCheckResult> healthCheckResults;
-	private String version;
+    private String id;
+    private String agentId;
+    private String host;
+    private String state;
+    private String startedAt;
+    private String stagedAt;
+    private Collection<Integer> ports;
+    private String version;
+    private Collection<IpAddress> ipAddresses;
+    private String appId;
+    private Collection<Integer> servicePorts;
+    private Collection<HealthCheckResults> healthCheckResults;
 
-	public String getHost() {
-		return host;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setHost(String host) {
-		this.host = host;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getAgentId() {
+        return agentId;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setAgentId(String agentId) {
+        this.agentId = agentId;
+    }
 
-	public String getAppId() {
-		return appId;
-	}
+    public String getHost() {
+        return host;
+    }
 
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
+    public void setHost(String host) {
+        this.host = host;
+    }
 
-	public Collection<Integer> getPorts() {
-		return ports;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public void setPorts(Collection<Integer> ports) {
-		this.ports = ports;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public String getStagedAt() {
-		return stagedAt;
-	}
+    public String getStartedAt() {
+        return startedAt;
+    }
 
-	public void setStagedAt(String stagedAt) {
-		this.stagedAt = stagedAt;
-	}
+    public void setStartedAt(String startedAt) {
+        this.startedAt = startedAt;
+    }
 
-	public String getStartedAt() {
-		return startedAt;
-	}
+    public String getStagedAt() {
+        return stagedAt;
+    }
 
-	public void setStartedAt(String startedAt) {
-		this.startedAt = startedAt;
-	}
+    public void setStagedAt(String stagedAt) {
+        this.stagedAt = stagedAt;
+    }
 
-	public Collection<HealthCheckResult> getHealthCheckResults() {
-		return healthCheckResults;
-	}
+    public Collection<Integer> getPorts() {
+        return ports;
+    }
 
-	public void setHealthCheckResults(Collection<HealthCheckResult> healthCheckResults) {
-		this.healthCheckResults = healthCheckResults;
-	}
+    public void setPorts(Collection<Integer> ports) {
+        this.ports = ports;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	@Override
-	public String toString() {
-		return ModelUtils.toString(this);
-	}
+    public Collection<IpAddress> getIpAddresses() {
+        return ipAddresses;
+    }
+
+    public void setIpAddresses(Collection<IpAddress> ipAddresses) {
+        this.ipAddresses = ipAddresses;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public Collection<Integer> getServicePorts() {
+        return servicePorts;
+    }
+
+    public void setServicePorts(Collection<Integer> servicePorts) {
+        this.servicePorts = servicePorts;
+    }
+
+    public Collection<HealthCheckResults> getHealthCheckResults() {
+        return healthCheckResults;
+    }
+
+    public void setHealthCheckResults(Collection<HealthCheckResults> healthCheckResults) {
+        this.healthCheckResults = healthCheckResults;
+    }
+
+    @Override
+    public String toString() {
+        return ModelUtils.toString(this);
+    }
 }

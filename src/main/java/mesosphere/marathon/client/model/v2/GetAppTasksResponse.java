@@ -1,17 +1,17 @@
 package mesosphere.marathon.client.model.v2;
 
-import java.util.Collection;
+import java.util.List;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 public class GetAppTasksResponse {
-	private Collection<Task> tasks;
+	private List<Task> tasks;
 
-	public Collection<Task> getTasks() {
+	public List<Task> getTasks() {
 		return tasks;
 	}
 
-	public void setTasks(Collection<Task> tasks) {
+	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
 	}
 

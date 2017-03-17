@@ -1,7 +1,7 @@
 package mesosphere.marathon.client.model.v2;
 
 import com.google.gson.*;
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 import java.lang.reflect.Type;
 

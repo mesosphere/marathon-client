@@ -2,7 +2,7 @@ package mesosphere.marathon.client.model.v2;
 
 import java.util.List;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 public class GetAppsResponse {
 	private List<App> apps;

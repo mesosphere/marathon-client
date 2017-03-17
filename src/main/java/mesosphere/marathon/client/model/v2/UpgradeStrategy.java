@@ -1,5 +1,7 @@
 package mesosphere.marathon.client.model.v2;
 
+import mesosphere.client.common.ModelUtils;
+
 public class UpgradeStrategy {
     private Double minimumHealthCapacity;
     private Double maximumOverCapacity;
@@ -18,5 +20,10 @@ public class UpgradeStrategy {
 
     public void setMaximumOverCapacity(Double maximumOverCapacity) {
         this.maximumOverCapacity = maximumOverCapacity;
+    }
+
+    @Override
+    public String toString() {
+        return ModelUtils.toString(this);
     }
 }

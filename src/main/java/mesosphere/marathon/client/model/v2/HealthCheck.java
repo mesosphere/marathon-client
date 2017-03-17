@@ -1,8 +1,6 @@
 package mesosphere.marathon.client.model.v2;
 
-import mesosphere.marathon.client.utils.ModelUtils;
-
-import java.util.Collection;
+import mesosphere.client.common.ModelUtils;
 
 public class HealthCheck {
 	private Command command;
@@ -10,6 +8,7 @@ public class HealthCheck {
 	private Integer intervalSeconds;
 	private Integer maxConsecutiveFailures;
 	private Integer portIndex;
+	private Integer port;
 	private Integer timeoutSeconds;
 	private boolean ignoreHttp1xx;
 	private String path;
@@ -45,6 +44,14 @@ public class HealthCheck {
 
 	public void setPortIndex(Integer portIndex) {
 		this.portIndex = portIndex;
+	}
+
+	public Integer getPort() {
+		return port;
+	}
+
+	public void setPort(Integer port) {
+		this.port = port;
 	}
 
 	public Integer getTimeoutSeconds() {

@@ -2,9 +2,13 @@ package mesosphere.marathon.client.model.v2;
 
 import java.util.*;
 
-import mesosphere.marathon.client.utils.ModelUtils;
+import mesosphere.client.common.ModelUtils;
 
 public class App {
+
+	public App() {
+	}
+
 	public static class Deployment {
 		private String id;
 
@@ -25,28 +29,41 @@ public class App {
 	private String id;
 	private String cmd;
 	private List<String> args;
+	private String user;
 	private Integer instances;
 	private Double cpus;
 	private Double mem;
+	private Double disk;
+	private Double gpus;
 	private Collection<String> uris;
 	private List<List<String>> constraints;
 	private Collection<String> acceptedResourceRoles;
 	private Container container;
-	private Map<String, String> env;
+	private Map<String, Object> env;
 	private Map<String, String> labels;
+	private String ipAddress;
+	private String version;
+	private String residency;
+	private Integer taskKillGracePeriodSeconds;
+	private Map<String, SecretSource> secrets;
 	private String executor;
+    private List<Fetchable> fetch;
+    private List<String> storeUrls;
 	private List<Integer> ports;
+	private List<PortDefinition> portDefinitions;
 	private Boolean requirePorts;
 	private Collection<String> dependencies;
 	private Integer backoffSeconds;
 	private Double backoffFactor;
 	private Integer maxLaunchDelaySeconds;
 	private Collection<Task> tasks;
+    private AppVersionInfo versionInfo;
 	private Integer tasksStaged;
 	private Integer tasksRunning;
 	private Integer tasksHealthy;
 	private Integer tasksUnhealthy;
 	private List<HealthCheck> healthChecks;
+	private List<Object> readinessChecks;
 	private UpgradeStrategy upgradeStrategy;
 
 	private List<Deployment> deployments;
@@ -76,6 +93,14 @@ public class App {
 		this.args = args;
 	}
 
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(final String user) {
+		this.user = user;
+	}
+
 	public Integer getInstances() {
 		return instances;
 	}
@@ -98,6 +123,22 @@ public class App {
 
 	public void setMem(Double mem) {
 		this.mem = mem;
+	}
+
+	public Double getDisk() {
+		return disk;
+	}
+
+	public void setDisk(final Double disk) {
+		this.disk = disk;
+	}
+
+	public Double getGpus() {
+		return gpus;
+	}
+
+	public void setGpus(final Double gpus) {
+		this.gpus = gpus;
 	}
 
 	public Collection<String> getUris() {
@@ -151,11 +192,11 @@ public class App {
 		this.container = container;
 	}
 
-	public Map<String, String> getEnv() {
+	public Map<String, Object> getEnv() {
 		return env;
 	}
 
-	public void setEnv(Map<String, String> env) {
+	public void setEnv(Map<String, Object> env) {
 		this.env = env;
 	}
 
@@ -165,6 +206,46 @@ public class App {
 
 	public void setLabels(Map<String, String> labels) {
 		this.labels = labels;
+	}
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(final String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(final String version) {
+		this.version = version;
+	}
+
+	public String getResidency() {
+		return residency;
+	}
+
+	public void setResidency(final String residency) {
+		this.residency = residency;
+	}
+
+	public Integer getTaskKillGracePeriodSeconds() {
+		return taskKillGracePeriodSeconds;
+	}
+
+	public void setTaskKillGracePeriodSeconds(final Integer taskKillGracePeriodSeconds) {
+		this.taskKillGracePeriodSeconds = taskKillGracePeriodSeconds;
+	}
+
+	public Map<String, SecretSource> getSecrets() {
+		return secrets;
+	}
+
+	public void setSecrets(final Map<String, SecretSource> secrets) {
+		this.secrets = secrets;
 	}
 
 	public void addLabel(final String key, final String value) {
@@ -184,12 +265,36 @@ public class App {
 		this.executor = executor;
 	}
 
+    public List<Fetchable> getFetch() {
+        return fetch;
+    }
+
+    public void setFetch(final List<Fetchable> fetch) {
+        this.fetch = fetch;
+    }
+
+	public List<String> getStoreUrls() {
+		return storeUrls;
+	}
+
+	public void setStoreUrls(final List<String> storeUrls) {
+		this.storeUrls = storeUrls;
+	}
+
 	public List<Integer> getPorts() {
 		return ports;
 	}
 
 	public void setPorts(List<Integer> ports) {
 		this.ports = ports;
+	}
+
+	public List<PortDefinition> getPortDefinitions() {
+		return portDefinitions;
+	}
+
+	public void setPortDefinitions(List<PortDefinition> portDefinitions) {
+		this.portDefinitions = portDefinitions;
 	}
 
 	public Boolean getRequirePorts() {
@@ -204,7 +309,7 @@ public class App {
 		return dependencies;
 	}
 
-	public void setDependencies(final List<String> dependencies) {
+	public void setDependencies(final Collection<String> dependencies) {
 		this.dependencies = dependencies;
 	}
 
@@ -263,6 +368,14 @@ public class App {
 		this.tasks = tasks;
 	}
 
+    public AppVersionInfo getVersionInfo() {
+        return versionInfo;
+    }
+
+    public void setVersionInfo(final AppVersionInfo versionInfo) {
+        this.versionInfo = versionInfo;
+    }
+
 	public Integer getTasksStaged() {
 		return tasksStaged;
 	}
@@ -303,6 +416,14 @@ public class App {
 		this.healthChecks = healthChecks;
 	}
 
+	public List<Object> getReadinessChecks() {
+		return readinessChecks;
+	}
+
+	public void setReadinessChecks(final List<Object> readinessChecks) {
+		this.readinessChecks = readinessChecks;
+	}
+
 	public UpgradeStrategy getUpgradeStrategy() {
 		return upgradeStrategy;
 	}
@@ -331,5 +452,4 @@ public class App {
 	public String toString() {
 		return ModelUtils.toString(this);
 	}
-
 }
