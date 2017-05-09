@@ -1,6 +1,7 @@
 package mesosphere.marathon.client;
 
 import java.util.List;
+import java.util.Map;
 
 import mesosphere.client.common.HeaderUtils;
 import mesosphere.marathon.client.model.v2.App;
@@ -21,12 +22,17 @@ import mesosphere.marathon.client.model.v2.Result;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
+import feign.QueryMap;
 
 public interface Marathon {
 	// Apps
 	@RequestLine("GET /v2/apps")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
 	GetAppsResponse getApps() throws MarathonException;
+
+	@RequestLine("GET /v2/apps")
+	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
+	GetAppsResponse getApps(@QueryMap Map<String,String> queryMap) throws MarathonException;
 
 	@RequestLine("GET /v2/apps/{id}")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
