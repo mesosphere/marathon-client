@@ -61,10 +61,10 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>org.codehaus.groovy</groupId>
-		    <artifactId>groovy-all</artifactId>
-		    <version>2.4.10</version>
-				<scope>test</scope>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.10</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
