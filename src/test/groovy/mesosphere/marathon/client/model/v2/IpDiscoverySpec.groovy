@@ -7,8 +7,7 @@ class IpDiscoverySpec extends Specification {
   def "setPorts overwrite existing ports"() {
     given:
     @Subject discovery = new IpDiscovery()
-    List<IpDiscoveryPort> newPorts = new ArrayList<>(3)
-    newPorts.add(new IpDiscoveryPort(80, "nginx", "tcp"))
+    def newPorts = [new IpDiscoveryPort(80, "nginx", "tcp")]
 
     when:
     discovery.addPort(8080, "jenkins", "tcp")
