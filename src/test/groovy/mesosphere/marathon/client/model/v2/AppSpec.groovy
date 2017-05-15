@@ -77,6 +77,7 @@ class AppSpec extends Specification {
         def app = ModelUtils.GSON.fromJson(json, App.class)
         def portDefs = app.getPortDefinitions()
         def fetch2 = app.fetch[1]
+        def discovery = app.ipAddress.discovery
 
         expect:
         // env
@@ -105,7 +106,11 @@ class AppSpec extends Specification {
         app.secrets.secret3.source == "/foo2"
 
         // ipaddress
-        app.ipAddress.discovery.ports.size() == 1
+        discovery.ports.size() == 1
+        discovery.ports[0].number == 8080
+        discovery.ports[0].name == "rest-endpoint"
+        app.ipAddress.labels["environment"] == "dev"
+        app.ipAddress.groups[0] == "dev"
     }
 
     def exampleJSON() {

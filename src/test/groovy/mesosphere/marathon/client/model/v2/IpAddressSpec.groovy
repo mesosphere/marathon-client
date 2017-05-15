@@ -5,28 +5,22 @@ import spock.lang.Subject
 
 class IpAddressSpec extends Specification {
 
-    def "basics"() {
+    def "IpAddress basics"() {
         given:
         @Subject ipAddress = new IpAddress()
 
-        when:
-        ipAddress.setNetworkName("network1")
+        ipAddress.networkName = "network1"
+        ipAddress.discovery = new IpDiscovery()
+        ipAddress.groups = ["dev", "test"]
+        ipAddress.labels = ["foo": "bar", "key1": 3]
 
-        then:
+        expect:
+        ipAddress.discovery
         ipAddress.networkName == "network1"
-
-        when:
-        ipAddress.setDiscovery(new IpDiscovery())
-
-        then:
-        ipAddress.discovery != null
-
-        when:
-        ipAddress.setGroups(["dev", "test"])
-
-        then:
         ipAddress.groups[0] == "dev"
         ipAddress.groups[1] == "test"
+        ipAddress.labels["foo"] == "bar"
+        ipAddress.labels["key1"] == 3
     }
 
     def "addGroup appends to group list"() {
@@ -51,7 +45,7 @@ class IpAddressSpec extends Specification {
         @Subject ipAddress = new IpAddress()
 
         when:
-        ipAddress.setGroups(["dev", "test"])
+        ipAddress.groups = ["dev", "test"]
 
         then:
         ipAddress.groups.size() == 2
@@ -59,10 +53,29 @@ class IpAddressSpec extends Specification {
         ipAddress.groups[1] == "test"
 
         when:
-        ipAddress.setGroups(["production"])
+        ipAddress.groups = ["production"]
 
         then:
         ipAddress.groups.size() == 1
         ipAddress.groups[0] == "production"
+    }
+
+    def "addLabel adds a label to existing labels"() {
+        given:
+        @Subject ipAddress = new IpAddress()
+
+        when:
+        ipAddress.labels = ["foo": "bar"]
+
+        then:
+        ipAddress.labels["foo"] == "bar"
+
+        when:
+        ipAddress.addLabel("another", 200)
+
+        then:
+        ipAddress.labels.size() == 2
+        ipAddress.labels["foo"] == "bar"
+        ipAddress.labels["another"] == 200
     }
 }

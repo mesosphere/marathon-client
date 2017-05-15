@@ -7,12 +7,20 @@ class IpDiscoverySpec extends Specification {
     def "setPorts overwrite existing ports"() {
         given:
         @Subject discovery = new IpDiscovery()
-        discovery.addPort(8080, "jenkins", "tcp")
         List<IpDiscoveryPort> newPorts = new ArrayList<>(3)
         newPorts.add(new IpDiscoveryPort(80, "nginx", "tcp"))
 
         when:
-        discovery.setPorts(newPorts)
+        discovery.addPort(8080, "jenkins", "tcp")
+
+        then:
+        discovery.ports.size() == 1
+        discovery.ports[0].number == 8080
+        discovery.ports[0].name == "jenkins"
+        discovery.ports[0].protocol == "tcp"
+
+        when:
+        discovery.ports = newPorts
 
         then:
         discovery.ports.size() == 1
