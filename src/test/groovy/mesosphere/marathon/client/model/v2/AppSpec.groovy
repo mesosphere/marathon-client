@@ -5,106 +5,111 @@ import spock.lang.Specification
 
 class AppSpec extends Specification {
 
-  def app = new App()
+    def app = new App()
 
-  def "allows multiple roles"() {
-    def firstRole = "arole"
-    def secondRole = "another"
+    def "allows multiple roles"() {
+        def firstRole = "arole"
+        def secondRole = "another"
 
-    when:
-    app.addAcceptedResourceRole(firstRole)
+        when:
+        app.addAcceptedResourceRole(firstRole)
 
-    then:
-    app.acceptedResourceRoles.contains(firstRole)
+        then:
+        app.acceptedResourceRoles.contains(firstRole)
 
-    when:
-    app.addAcceptedResourceRole(secondRole)
+        when:
+        app.addAcceptedResourceRole(secondRole)
 
-    then:
-    app.acceptedResourceRoles.contains(firstRole)
-    app.acceptedResourceRoles.contains(secondRole)
+        then:
+        app.acceptedResourceRoles.contains(firstRole)
+        app.acceptedResourceRoles.contains(secondRole)
 
-    when:
-    app.addAcceptedResourceRole(firstRole)
+        when:
+        app.addAcceptedResourceRole(firstRole)
 
-    then:
-    app.acceptedResourceRoles.contains(firstRole)
-  }
+        then:
+        app.acceptedResourceRoles.contains(firstRole)
+    }
 
 
-  def "test add dependency"() {
-    def firstDep = "adep"
-    def secondDep = "another"
+    def "test add dependency"() {
+        def firstDep = "adep"
+        def secondDep = "another"
 
-    when:
-    app.addDependency(firstDep)
+        when:
+        app.addDependency(firstDep)
 
-    then:
-    app.getDependencies().contains(firstDep)
+        then:
+        app.getDependencies().contains(firstDep)
 
-    when:
-    app.addDependency(secondDep)
+        when:
+        app.addDependency(secondDep)
 
-    then:
-    app.getDependencies().contains(firstDep)
-    app.getDependencies().contains(secondDep)
+        then:
+        app.getDependencies().contains(firstDep)
+        app.getDependencies().contains(secondDep)
 
-    when:
-    app.addDependency(firstDep)
+        when:
+        app.addDependency(firstDep)
 
-    then:
-    app.getDependencies().contains(firstDep)
+        then:
+        app.getDependencies().contains(firstDep)
 
-  }
+    }
 
-  def "backoff factor checks"() {
-    app.backoffFactor = 0.1
+    def "backoff factor checks"() {
+        app.backoffFactor = 0.1
 
-    expect:
-    app.backoffFactor == 0.1
+        expect:
+        app.backoffFactor == 0.1
 
-    when:
-    app.backoffFactor = 1d
+        when:
+        app.backoffFactor = 1d
 
-    then:
-    app.backoffFactor == 1.0
-  }
+        then:
+        app.backoffFactor == 1.0
+    }
 
-  def "test example JSON"() {
-    given:
-    def json = exampleJSON()
+    def "test example JSON"() {
+        given:
+        def json = exampleJSON()
 
-    def app = ModelUtils.GSON.fromJson(json, App.class)
-    def portDefs = app.getPortDefinitions()
-    def fetch2 = app.fetch.get(1)
-    
-    expect:
-    // env
-    app.getEnv().get("PASSWORD") == ["secret": "/db/password"]
+        def app = ModelUtils.GSON.fromJson(json, App.class)
+        def portDefs = app.getPortDefinitions()
+        def fetch2 = app.fetch[1]
 
-    // port definitions
-    portDefs.size() == 1
-    portDefs.get(0).port == 0
-    portDefs.get(0).protocol == "tcp"
-    portDefs.get(0).name == "http"
-    portDefs.get(0).labels == ["vip" : "192.168.0.1:80"]
+        expect:
+        // env
+        app.getEnv().get("PASSWORD") == ["secret": "/db/password"]
 
-    // fetch
-    app.fetch.size() == 2
-    fetch2.uri == "https://foo.com/archive.zip"
-    !fetch2.executable
-    fetch2.extract
-    fetch2.cache
-    fetch2.outputFile == "newname.zip"
+        // port definitions
+        portDefs.size() == 2
+        portDefs[0].port == 0
+        portDefs[0].protocol == "tcp"
+        portDefs[0].name == "http"
+        portDefs[0].labels == ["vip": "192.168.0.1:80"]
+        portDefs[1].port == 31009
+        portDefs[1].protocol == "tcp"
+        portDefs[1].labels == ["VIP_0": "3.3.3.3"]
 
-    //secrets
-    app.secrets.size() == 2
-    app.secrets.secret3.source == "/foo2"
+        // fetch
+        app.fetch.size() == 2
+        fetch2.uri == "https://foo.com/archive.zip"
+        !fetch2.executable
+        fetch2.extract
+        fetch2.cache
+        fetch2.outputFile == "newname.zip"
 
-  }
+        //secrets
+        app.secrets.size() == 2
+        app.secrets.secret3.source == "/foo2"
 
-  def exampleJSON() {
-    return """
+        // ipaddress
+        app.ipAddress.discovery.ports.size() == 1
+    }
+
+    def exampleJSON() {
+        return """
 {
   "id": "/foo",
   "instances": 2,
@@ -204,25 +209,23 @@ class AppSpec extends Specification {
     "note": "Away from olympus"
   },
   "maxLaunchDelaySeconds": 3600,
-//  *******
-//  The lines below are defined in the marathon project but fail for marathon client
-//  "ipAddress": {
-//    "discovery": {
-//      "ports": [
-//        {
-//          "number": 8080,
-//          "name": "rest-endpoint",
-//          "protocol": "tcp"
-//        }
-//      ]
-//    },
-//    "groups": [
-//      "dev"
-//    ],
-//    "labels": {
-//      "environment": "dev"
-//    }
-//  },
+  "ipAddress": {
+    "discovery": {
+      "ports": [
+        {
+          "number": 8080,
+          "name": "rest-endpoint",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "groups": [
+      "dev"
+    ],
+    "labels": {
+      "environment": "dev"
+    }
+  },
   "portDefinitions": [
     {
       "port": 0,
@@ -230,6 +233,13 @@ class AppSpec extends Specification {
       "name": "http",
       "labels": {
         "vip": "192.168.0.1:80"
+      }
+    },
+    {
+      "port": 31009,
+      "protocol": "tcp",
+      "labels": {
+        "VIP_0": "3.3.3.3"
       }
     }
   ],
@@ -262,5 +272,5 @@ class AppSpec extends Specification {
   "taskKillGracePeriodSeconds": 30
 }
 """
-  }
+    }
 }
