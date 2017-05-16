@@ -111,6 +111,11 @@ class AppSpec extends Specification {
     discovery.ports[0].name == "rest-endpoint"
     app.ipAddress.labels["environment"] == "dev"
     app.ipAddress.groups[0] == "dev"
+
+    // residency
+    app.residency.relaunchEscalationTimeoutSeconds == 60
+    app.residency.taskLostBehavior == "WAIT_FOREVER"
+
   }
 
   def exampleJSON() {
@@ -274,7 +279,11 @@ class AppSpec extends Specification {
       "source": "/foo2"
     }
   },
-  "taskKillGracePeriodSeconds": 30
+  "taskKillGracePeriodSeconds": 30,
+  "residency": {
+    "relaunchEscalationTimeoutSeconds": 60,
+    "taskLostBehavior": "WAIT_FOREVER"
+  }
 }
 """
   }

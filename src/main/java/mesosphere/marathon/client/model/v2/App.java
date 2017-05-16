@@ -43,7 +43,7 @@ public class App {
 	private Map<String, String> labels;
 	private IpAddress ipAddress;
 	private String version;
-	private String residency;
+	private Residency residency;
 	private Integer taskKillGracePeriodSeconds;
 	private Map<String, SecretSource> secrets;
 	private String executor;
@@ -224,11 +224,11 @@ public class App {
 		this.version = version;
 	}
 
-	public String getResidency() {
+	public Residency getResidency() {
 		return residency;
 	}
 
-	public void setResidency(final String residency) {
+	public void setResidency(final Residency residency) {
 		this.residency = residency;
 	}
 
