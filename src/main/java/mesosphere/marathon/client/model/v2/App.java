@@ -41,7 +41,7 @@ public class App {
 	private Container container;
 	private Map<String, Object> env;
 	private Map<String, String> labels;
-	private String ipAddress;
+	private IpAddress ipAddress;
 	private String version;
 	private String residency;
 	private Integer taskKillGracePeriodSeconds;
@@ -208,11 +208,11 @@ public class App {
 		this.labels = labels;
 	}
 
-	public String getIpAddress() {
+	public IpAddress getIpAddress() {
 		return ipAddress;
 	}
 
-	public void setIpAddress(final String ipAddress) {
+	public void setIpAddress(final IpAddress ipAddress) {
 		this.ipAddress = ipAddress;
 	}
 

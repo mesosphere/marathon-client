@@ -76,18 +76,22 @@ class AppSpec extends Specification {
 
     def app = ModelUtils.GSON.fromJson(json, App.class)
     def portDefs = app.getPortDefinitions()
-    def fetch2 = app.fetch.get(1)
-    
+    def fetch2 = app.fetch[1]
+    def discovery = app.ipAddress.discovery
+
     expect:
     // env
     app.getEnv().get("PASSWORD") == ["secret": "/db/password"]
 
     // port definitions
-    portDefs.size() == 1
-    portDefs.get(0).port == 0
-    portDefs.get(0).protocol == "tcp"
-    portDefs.get(0).name == "http"
-    portDefs.get(0).labels == ["vip" : "192.168.0.1:80"]
+    portDefs.size() == 2
+    portDefs[0].port == 0
+    portDefs[0].protocol == "tcp"
+    portDefs[0].name == "http"
+    portDefs[0].labels == ["vip": "192.168.0.1:80"]
+    portDefs[1].port == 31009
+    portDefs[1].protocol == "tcp"
+    portDefs[1].labels == ["VIP_0": "3.3.3.3"]
 
     // fetch
     app.fetch.size() == 2
@@ -101,6 +105,12 @@ class AppSpec extends Specification {
     app.secrets.size() == 2
     app.secrets.secret3.source == "/foo2"
 
+    // ipaddress
+    discovery.ports.size() == 1
+    discovery.ports[0].number == 8080
+    discovery.ports[0].name == "rest-endpoint"
+    app.ipAddress.labels["environment"] == "dev"
+    app.ipAddress.groups[0] == "dev"
   }
 
   def exampleJSON() {
@@ -204,25 +214,23 @@ class AppSpec extends Specification {
     "note": "Away from olympus"
   },
   "maxLaunchDelaySeconds": 3600,
-//  *******
-//  The lines below are defined in the marathon project but fail for marathon client
-//  "ipAddress": {
-//    "discovery": {
-//      "ports": [
-//        {
-//          "number": 8080,
-//          "name": "rest-endpoint",
-//          "protocol": "tcp"
-//        }
-//      ]
-//    },
-//    "groups": [
-//      "dev"
-//    ],
-//    "labels": {
-//      "environment": "dev"
-//    }
-//  },
+  "ipAddress": {
+    "discovery": {
+      "ports": [
+        {
+          "number": 8080,
+          "name": "rest-endpoint",
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "groups": [
+      "dev"
+    ],
+    "labels": {
+      "environment": "dev"
+    }
+  },
   "portDefinitions": [
     {
       "port": 0,
@@ -230,6 +238,13 @@ class AppSpec extends Specification {
       "name": "http",
       "labels": {
         "vip": "192.168.0.1:80"
+      }
+    },
+    {
+      "port": 31009,
+      "protocol": "tcp",
+      "labels": {
+        "VIP_0": "3.3.3.3"
       }
     }
   ],
