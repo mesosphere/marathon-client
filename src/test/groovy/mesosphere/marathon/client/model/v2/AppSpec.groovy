@@ -70,6 +70,28 @@ class AppSpec extends Specification {
     app.backoffFactor == 1.0
   }
 
+  def "residency tests"() {
+    def residency = new Residency()
+    residency.relaunchEscalationTimeoutSeconds = 60
+    residency.taskLostBehavior = "WAIT_FOREVER"
+
+    expect:
+    !app.residency
+
+    when:
+    app.residency = residency
+
+    then:
+    app.residency.relaunchEscalationTimeoutSeconds == 60
+    app.residency.taskLostBehavior == "WAIT_FOREVER"
+
+    when:
+    app.residency.taskLostBehavior = "INVALID_BEHAVIOR"
+
+    then:
+    app.residency.taskLostBehavior == "INVALID_BEHAVIOR"
+  }
+
   def "test example JSON"() {
     given:
     def json = exampleJSON()
