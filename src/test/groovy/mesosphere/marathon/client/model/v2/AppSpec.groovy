@@ -70,6 +70,28 @@ class AppSpec extends Specification {
     app.backoffFactor == 1.0
   }
 
+  def "residency tests"() {
+    def residency = new Residency()
+    residency.relaunchEscalationTimeoutSeconds = 60
+    residency.taskLostBehavior = "WAIT_FOREVER"
+
+    expect:
+    !app.residency
+
+    when:
+    app.residency = residency
+
+    then:
+    app.residency.relaunchEscalationTimeoutSeconds == 60
+    app.residency.taskLostBehavior == "WAIT_FOREVER"
+
+    when:
+    app.residency.taskLostBehavior = "INVALID_BEHAVIOR"
+
+    then:
+    app.residency.taskLostBehavior == "INVALID_BEHAVIOR"
+  }
+
   def "test example JSON"() {
     given:
     def json = exampleJSON()
@@ -111,6 +133,11 @@ class AppSpec extends Specification {
     discovery.ports[0].name == "rest-endpoint"
     app.ipAddress.labels["environment"] == "dev"
     app.ipAddress.groups[0] == "dev"
+
+    // residency
+    app.residency.relaunchEscalationTimeoutSeconds == 60
+    app.residency.taskLostBehavior == "WAIT_FOREVER"
+
   }
 
   def exampleJSON() {
@@ -274,7 +301,11 @@ class AppSpec extends Specification {
       "source": "/foo2"
     }
   },
-  "taskKillGracePeriodSeconds": 30
+  "taskKillGracePeriodSeconds": 30,
+  "residency": {
+    "relaunchEscalationTimeoutSeconds": 60,
+    "taskLostBehavior": "WAIT_FOREVER"
+  }
 }
 """
   }
