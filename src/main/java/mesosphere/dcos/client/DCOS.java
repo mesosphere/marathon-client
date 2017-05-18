@@ -46,7 +46,7 @@ public interface DCOS extends Marathon {
     /**
      * @param namespace - All apps under this group/subgroups will be returned. Example "/products/us-east"
      * @return applications
-     * @throws DCOSException on error
+     * @throws DCOSException if DC/OS returns non-20x response
      */
     @RequestLine("GET /v2/apps/{namespace}/*")
     @Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
