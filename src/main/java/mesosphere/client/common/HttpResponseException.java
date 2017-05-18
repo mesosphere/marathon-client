@@ -24,6 +24,8 @@ public abstract class HttpResponseException extends RuntimeException {
 
     /**
      * Gets the HTTP status code of the failure, such as 404.
+     *
+     * @return status code
      */
     public int getStatus() {
         return status;

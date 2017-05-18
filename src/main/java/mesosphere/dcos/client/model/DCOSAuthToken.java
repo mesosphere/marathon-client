@@ -15,7 +15,9 @@ public class DCOSAuthToken {
 
     /**
      * Package-private visibility for testing.
-     * @param token
+     *
+     * @param token token
+     * @throws java.text.ParseException on error
      */
     public DCOSAuthToken(final String token) throws java.text.ParseException {
         this.token = token;
