@@ -40,6 +40,8 @@ public class MarathonClient {
 	 *
 	 * @param endpoint
 	 * 		URL of Marathon
+	 * @param interceptors optional request interceptors
+	 * @return Marathon client
 	 */
 	public static Marathon getInstance(String endpoint, RequestInterceptor... interceptors) {
 		Builder b = Feign.builder()
@@ -54,6 +56,11 @@ public class MarathonClient {
 
 	/**
 	 * Creates a Marathon client proxy that performs HTTP basic authentication.
+	 *
+	 * @param endpoint URL for Marathon
+	 * @param username basic auth username
+	 * @param password basic auth password
+	 * @return Marathon client
 	 */
 	public static Marathon getInstanceWithBasicAuth(String endpoint, String username, String password) {
 		return getInstance(endpoint,new BasicAuthRequestInterceptor(username,password));

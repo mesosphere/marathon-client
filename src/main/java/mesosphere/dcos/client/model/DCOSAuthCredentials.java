@@ -36,7 +36,7 @@ public class DCOSAuthCredentials {
     /**
      * @param serviceId service account id
      * @param servicePrivateKey contents of the private key (pem) file for the service account
-     * @return
+     * @return auth credentials for DC/OS
      */
     public static DCOSAuthCredentials forServiceAccount(final String serviceId, final String servicePrivateKey) {
         try {
