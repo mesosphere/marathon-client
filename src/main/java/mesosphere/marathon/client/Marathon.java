@@ -88,7 +88,7 @@ public interface Marathon {
 
 	@RequestLine("PUT /v2/groups/{id}?force={force}")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
-	Result putGroup(@Param("id") String id, @Param("force") boolean force, Group group) throws MarathonException;
+	Result updateGroup(@Param("id") String id, @Param("force") boolean force, Group group) throws MarathonException;
 
 	// Deployments
 	@RequestLine("GET /v2/deployments")
