@@ -78,15 +78,17 @@ public interface Marathon {
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
 	Result createGroup(Group group) throws MarathonException;
 	
-	@RequestLine("DELETE /v2/groups/{id}")
+	@RequestLine("DELETE /v2/groups/{id}?force={force}")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
-	Result deleteGroup(@Param("id") String id) throws MarathonException;
+	Result deleteGroup(@Param("id") String id, @Param("force") boolean force) throws MarathonException;
 	
 	@RequestLine("GET /v2/groups/{id}")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
 	Group getGroup(@Param("id") String id) throws MarathonException;
 
-	// Tasks
+	@RequestLine("PUT /v2/groups/{id}?force={force}")
+	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
+	Result updateGroup(@Param("id") String id, @Param("force") boolean force, Group group) throws MarathonException;
 
 	// Deployments
 	@RequestLine("GET /v2/deployments")
