@@ -17,7 +17,7 @@ import mesosphere.marathon.client.model.v2.DeleteAppTasksResponse;
 import mesosphere.marathon.client.model.v2.DeleteTaskCriteria;
 import mesosphere.marathon.client.model.v2.GetAbdicateLeaderResponse;
 import mesosphere.marathon.client.model.v2.GetAppNamespaceResponse;
-import mesosphere.marathon.client.model.v2.GetAppVersionResponse;
+import mesosphere.marathon.client.model.v2.GetAppVersionsResponse;
 import mesosphere.marathon.client.model.v2.GetEventSubscriptionRegisterResponse;
 import mesosphere.marathon.client.model.v2.GetEventSubscriptionsResponse;
 import mesosphere.marathon.client.model.v2.GetLeaderResponse;
@@ -98,16 +98,6 @@ public interface DCOS extends Marathon {
     DeleteAppTasksResponse deleteAppTasksAndWipeWithTaskId(@Param("appId") String appId,
                                                            @Param("taskId") String taskId,
                                                            @Param("force") boolean force)
-            throws DCOSException;
-
-    @RequestLine("GET /v2/apps/{appId}/versions")
-    @Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
-    GetAppVersionResponse getAppVersion(@Param("id") String appId) throws DCOSException;
-
-    @RequestLine("GET /v2/apps/{appId}/versions/{version}")
-    @Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
-    App getAppVersion(@Param("appId") String appId,
-                      @Param("version") String version)
             throws DCOSException;
 
     // Deployments
