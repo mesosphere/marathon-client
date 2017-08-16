@@ -42,7 +42,6 @@ public class App {
 	private Map<String, Object> env;
 	private Map<String, String> labels;
 	private IpAddress ipAddress;
-	private String version;
 	private Residency residency;
 	private Integer taskKillGracePeriodSeconds;
 	private Map<String, SecretSource> secrets;
@@ -214,14 +213,6 @@ public class App {
 
 	public void setIpAddress(final IpAddress ipAddress) {
 		this.ipAddress = ipAddress;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(final String version) {
-		this.version = version;
 	}
 
 	public Residency getResidency() {
