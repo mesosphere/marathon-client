@@ -10,6 +10,7 @@ import mesosphere.marathon.client.model.v2.DeleteAppTasksResponse;
 import mesosphere.marathon.client.model.v2.Deployment;
 import mesosphere.marathon.client.model.v2.GetAppResponse;
 import mesosphere.marathon.client.model.v2.GetAppTasksResponse;
+import mesosphere.marathon.client.model.v2.GetAppVersionsResponse;
 import mesosphere.marathon.client.model.v2.GetAppsResponse;
 import mesosphere.marathon.client.model.v2.GetEventSubscriptionRegisterResponse;
 import mesosphere.marathon.client.model.v2.GetEventSubscriptionsResponse;
@@ -42,6 +43,14 @@ public interface Marathon {
 	@RequestLine("GET /v2/apps/{id}/tasks")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
 	GetAppTasksResponse getAppTasks(@Param("id") String id) throws MarathonException;
+
+	@RequestLine("GET /v2/apps/{id}/versions")
+	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
+	GetAppVersionsResponse getAppVersions(@Param("id") String id) throws MarathonException;
+
+	@RequestLine("GET /v2/apps/{id}/versions/{version}")
+	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
+	App getAppVersion(@Param("id") String id, @Param("version") String version) throws MarathonException;
 
 	@RequestLine("GET /v2/tasks")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
