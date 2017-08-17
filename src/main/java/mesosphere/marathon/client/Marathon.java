@@ -18,6 +18,7 @@ import mesosphere.marathon.client.model.v2.GetTasksResponse;
 import mesosphere.marathon.client.model.v2.Group;
 import mesosphere.marathon.client.model.v2.QueueResponse;
 import mesosphere.marathon.client.model.v2.Result;
+import mesosphere.marathon.client.model.v2.VersionedApp;
 
 import feign.Headers;
 import feign.Param;
@@ -48,7 +49,7 @@ public interface Marathon {
 
 	@RequestLine("POST /v2/apps")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)
-	App createApp(App app) throws MarathonException;
+	VersionedApp createApp(App app) throws MarathonException;
 
 	@RequestLine("PUT /v2/apps/{app_id}?force={force}")
 	@Headers(HeaderUtils.MARATHON_API_SOURCE_HEADER)

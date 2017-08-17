@@ -5,13 +5,13 @@ import java.util.List;
 import mesosphere.client.common.ModelUtils;
 
 public class GetAppsResponse {
-	private List<App> apps;
+	private List<VersionedApp> apps;
 
-	public List<App> getApps() {
+	public List<VersionedApp> getApps() {
 		return apps;
 	}
 
-	public void setApps(List<App> apps) {
+	public void setApps(List<VersionedApp> apps) {
 		this.apps = apps;
 	}
 
