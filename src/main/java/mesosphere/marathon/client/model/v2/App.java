@@ -62,7 +62,7 @@ public class App {
 	private Integer tasksHealthy;
 	private Integer tasksUnhealthy;
 	private List<HealthCheck> healthChecks;
-	private List<Object> readinessChecks;
+	private List<ReadinessCheck> readinessChecks;
 	private UpgradeStrategy upgradeStrategy;
 
 	private List<Deployment> deployments;
@@ -407,11 +407,11 @@ public class App {
 		this.healthChecks = healthChecks;
 	}
 
-	public List<Object> getReadinessChecks() {
+	public List<ReadinessCheck> getReadinessChecks() {
 		return readinessChecks;
 	}
 
-	public void setReadinessChecks(final List<Object> readinessChecks) {
+	public void setReadinessChecks(final List<ReadinessCheck> readinessChecks) {
 		this.readinessChecks = readinessChecks;
 	}
 
