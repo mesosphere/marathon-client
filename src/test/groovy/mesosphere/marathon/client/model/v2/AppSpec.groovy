@@ -138,7 +138,16 @@ class AppSpec extends Specification {
     app.residency.relaunchEscalationTimeoutSeconds == 60
     app.residency.taskLostBehavior == "WAIT_FOREVER"
 
-  }
+    // port mappings
+    app.container.portMappings.size() == 1
+    app.container.portMappings.each { port ->
+      assert port.containerPort == 80
+      assert port.servicePort == 10019
+      assert port.protocol == "tcp"
+      assert port.labels.size() == 1
+      assert port.labels == ["vip": "192.168.0.1:80"]
+    }
+}
 
   def exampleJSON() {
     return """
