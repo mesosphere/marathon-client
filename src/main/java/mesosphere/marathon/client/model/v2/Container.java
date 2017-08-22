@@ -30,7 +30,7 @@ public class Container {
 		return portMappings;
 	}
 
-	public void setPortMappings(Collection<port> portMappings) {
+	public void setPortMappings(Collection<Port> portMappings) {
 		this.portMappings = portMappings;
 	}
 
