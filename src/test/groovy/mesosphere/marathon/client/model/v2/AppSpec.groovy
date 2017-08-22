@@ -176,21 +176,21 @@ class AppSpec extends Specification {
           "value": "kdc"
         }
       ],
-      "portMappings": [
-        {
-          "containerPort": 80,
-          "hostPort": 0,
-          "protocol": "tcp",
-          "servicePort": 10019,
-          "name": "http",
-          "labels": {
-            "vip": "192.168.0.1:80"
-          }
-        }
-      ],
       "privileged": false
     },
     "type": "DOCKER",
+    "portMappings": [
+      {
+        "containerPort": 80,
+        "hostPort": 0,
+        "protocol": "tcp",
+        "servicePort": 10019,
+        "name": "http",
+        "labels": {
+          "vip": "192.168.0.1:80"
+        }
+      }
+    ],
     "volumes": [
       {
         "containerPath": "/docker_storage",

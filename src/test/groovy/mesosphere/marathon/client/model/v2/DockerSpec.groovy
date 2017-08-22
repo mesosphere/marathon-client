@@ -14,17 +14,17 @@ class DockerSpec extends Specification {
    "cmd":"echo",
    "container":{
       "docker":{
-         "image":"ubuntu",
-         "portMappings":[
-            {
-               "containerPort":8080,
-               "protocol":"tcp",
-               "labels":{
-                  "VIP_0":"/foo:8080"
-               }
+         "image":"ubuntu"
+      },
+      "portMappings":[
+         {
+            "containerPort":8080,
+            "protocol":"tcp",
+            "labels":{
+               "VIP_0":"/foo:8080"
             }
-         ]
-      }
+         }
+      ]
    }
 }
 """
