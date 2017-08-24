@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class DockerSpec extends Specification {
 
-  def "docker port mappings from strings"() {
+  def "docker basics"() {
 
     def jsonString = """
 {
@@ -14,30 +14,34 @@ class DockerSpec extends Specification {
    "cmd":"echo",
    "container":{
       "docker":{
-         "image":"ubuntu",
-         "portMappings":[
-            {
-               "containerPort":8080,
-               "protocol":"tcp",
-               "labels":{
-                  "VIP_0":"/foo:8080"
-               }
-            }
-         ]
+        "forcePullImage": false,
+        "image": "mesosphere:marathon/latest",
+        "network": "BRIDGE",
+        "parameters": [
+          {
+            "key": "name",
+            "value": "kdc"
+          }
+        ],
+        "privileged": false
       }
    }
 }
 """
 
-    def app = ModelUtils.GSON.fromJson(jsonString, App.class);
+    def app = ModelUtils.GSON.fromJson(jsonString, App.class)
 
     expect:
-    app.container.docker.portMappings.size() == 1
-    app.container.docker.portMappings.each {port->
-      assert port.containerPort == 8080
-      assert port.protocol == "tcp"
-      assert port.labels.size() == 1
-      assert port.labels == ["VIP_0" : "/foo:8080"]
+    def dock = app.container.docker
+    dock.image == "mesosphere:marathon/latest"
+    !dock.forcePullImage
+    !dock.privileged
+    dock.network == "BRIDGE"
+
+    dock.parameters.size() == 1
+    dock.parameters.each { param ->
+      assert param.key == "name"
+      assert param.value == "kdc"
     }
   }
 }

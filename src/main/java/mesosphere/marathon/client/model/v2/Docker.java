@@ -9,7 +9,6 @@ public class Docker {
 	private String image;
 	private String network;
 	private boolean forcePullImage;
-	private Collection<Port> portMappings;
 	private Collection<Parameter> parameters;
 	private boolean privileged;
 
@@ -27,14 +26,6 @@ public class Docker {
 
 	public void setNetwork(String network) {
 		this.network = network;
-	}
-
-	public Collection<Port> getPortMappings() {
-		return portMappings;
-	}
-
-	public void setPortMappings(Collection<Port> portMappings) {
-		this.portMappings = portMappings;
 	}
 
 	public boolean isPrivileged() {

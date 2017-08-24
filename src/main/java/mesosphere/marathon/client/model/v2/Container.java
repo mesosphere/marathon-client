@@ -7,6 +7,7 @@ import mesosphere.client.common.ModelUtils;
 public class Container {
 	private String type;
 	private Docker docker;
+	private Collection<Port> portMappings;
 	private Collection<Volume> volumes;
 
 	public String getType() {
@@ -23,6 +24,14 @@ public class Container {
 
 	public void setDocker(Docker docker) {
 		this.docker = docker;
+	}
+
+	public Collection<Port> getPortMappings() {
+		return portMappings;
+	}
+
+	public void setPortMappings(Collection<Port> portMappings) {
+		this.portMappings = portMappings;
 	}
 
 	public Collection<Volume> getVolumes() {
