@@ -4,9 +4,6 @@ import java.util.Set;
 
 import mesosphere.client.common.ModelUtils;
 
-/**
- * @author Lewis Headden <lewis_headden@condenast.com>
- */
 public class ReadinessCheck {
 	private String name;
 	private String protocol;

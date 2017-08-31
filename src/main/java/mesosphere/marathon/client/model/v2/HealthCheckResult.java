@@ -5,7 +5,6 @@ import mesosphere.client.common.ModelUtils;
 /**
  * Represents information about attempting a {@link HealthCheck} on a task.
  *
- * @author Eric Bottard
  */
 public class HealthCheckResult {
 
