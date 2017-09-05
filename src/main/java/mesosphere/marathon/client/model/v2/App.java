@@ -46,8 +46,8 @@ public class App {
 	private Integer taskKillGracePeriodSeconds;
 	private Map<String, SecretSource> secrets;
 	private String executor;
-    private List<Fetchable> fetch;
-    private List<String> storeUrls;
+	private List<Fetchable> fetch;
+	private List<String> storeUrls;
 	private List<Integer> ports;
 	private List<PortDefinition> portDefinitions;
 	private Boolean requirePorts;
@@ -56,7 +56,7 @@ public class App {
 	private Double backoffFactor;
 	private Integer maxLaunchDelaySeconds;
 	private Collection<Task> tasks;
-    private AppVersionInfo versionInfo;
+	private AppVersionInfo versionInfo;
 	private Integer tasksStaged;
 	private Integer tasksRunning;
 	private Integer tasksHealthy;
@@ -64,6 +64,7 @@ public class App {
 	private List<HealthCheck> healthChecks;
 	private List<ReadinessCheck> readinessChecks;
 	private UpgradeStrategy upgradeStrategy;
+	private List<Network> networks;
 
 	private List<Deployment> deployments;
 	private TaskFailure lastTaskFailure;
@@ -256,13 +257,13 @@ public class App {
 		this.executor = executor;
 	}
 
-    public List<Fetchable> getFetch() {
-        return fetch;
-    }
+	public List<Fetchable> getFetch() {
+		return fetch;
+	}
 
-    public void setFetch(final List<Fetchable> fetch) {
-        this.fetch = fetch;
-    }
+	public void setFetch(final List<Fetchable> fetch) {
+		this.fetch = fetch;
+	}
 
 	public List<String> getStoreUrls() {
 		return storeUrls;
@@ -359,13 +360,13 @@ public class App {
 		this.tasks = tasks;
 	}
 
-    public AppVersionInfo getVersionInfo() {
-        return versionInfo;
-    }
+	public AppVersionInfo getVersionInfo() {
+		return versionInfo;
+	}
 
-    public void setVersionInfo(final AppVersionInfo versionInfo) {
-        this.versionInfo = versionInfo;
-    }
+	public void setVersionInfo(final AppVersionInfo versionInfo) {
+		this.versionInfo = versionInfo;
+	}
 
 	public Integer getTasksStaged() {
 		return tasksStaged;
@@ -417,6 +418,14 @@ public class App {
 
 	public UpgradeStrategy getUpgradeStrategy() {
 		return upgradeStrategy;
+	}
+
+	public List<Network> getNetworks() {
+		return networks;
+	}
+
+	public void setNetworks(List<Network> networks) {
+		this.networks = networks;
 	}
 
 	public List<Deployment> getDeployments() {

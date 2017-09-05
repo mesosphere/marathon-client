@@ -8,6 +8,7 @@ public class Container {
 	private String type;
 	private Docker docker;
 	private Collection<Volume> volumes;
+	private Collection<Port> portMappings;
 
 	public String getType() {
 		return type;
@@ -31,6 +32,14 @@ public class Container {
 
 	public void setVolumes(Collection<Volume> volumes) {
 		this.volumes = volumes;
+	}
+
+	public Collection<Port> getPortMappings() {
+		return portMappings;
+	}
+
+	public void setPortMappings(Collection<Port> portMappings) {
+		this.portMappings = portMappings;
 	}
 
 	@Override
