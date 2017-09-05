@@ -1,20 +1,21 @@
 package mesosphere.marathon.client;
 
+import feign.*;
 import feign.Feign.Builder;
 import feign.auth.BasicAuthRequestInterceptor;
-import mesosphere.client.common.ModelUtils;
-import mesosphere.marathon.client.auth.TokenAuthRequestInterceptor;
-import feign.Feign;
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
-import feign.Response;
 import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
+import feign.slf4j.Slf4jLogger;
+import mesosphere.client.common.ModelUtils;
+import mesosphere.marathon.client.auth.TokenAuthRequestInterceptor;
 
 import static java.util.Arrays.asList;
 
 public class MarathonClient {
+
+	public static final String DEBUG_JSON_OUTPUT = "DEBUG_JSON_OUTPUT";
+
 	static class MarathonHeadersInterceptor implements RequestInterceptor {
 		@Override
 		public void apply(RequestTemplate template) {
@@ -22,14 +23,14 @@ public class MarathonClient {
 			template.header("Content-Type", "application/json");
 		}
 	}
-	
+
 	static class MarathonErrorDecoder implements ErrorDecoder {
 		@Override
 		public Exception decode(String methodKey, Response response) {
 			return new MarathonException(response.status(), response.reason());
 		}
 	}
-	
+
 	public static Marathon getInstance(String endpoint) {
 		return getInstance(endpoint, null);
 	}
@@ -44,12 +45,21 @@ public class MarathonClient {
 	 * @return Marathon client
 	 */
 	public static Marathon getInstance(String endpoint, RequestInterceptor... interceptors) {
+
 		Builder b = Feign.builder()
 				.encoder(new GsonEncoder(ModelUtils.GSON))
 				.decoder(new GsonDecoder(ModelUtils.GSON))
 				.errorDecoder(new MarathonErrorDecoder());
-		if (interceptors!=null)
+		if (interceptors != null)
 			b.requestInterceptors(asList(interceptors));
+		String debugOutput = System.getenv(DEBUG_JSON_OUTPUT);
+		if ("System.out".equals(debugOutput)) {
+			System.setProperty("org.slf4j.simpleLogger.logFile", "System.out");
+			System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "debug");
+			b.logger(new Slf4jLogger()).logLevel(Logger.Level.FULL);
+		} else if (debugOutput != null) {
+			b.logger(new Logger.JavaLogger().appendToFile(debugOutput)).logLevel(Logger.Level.FULL);
+		}
 		b.requestInterceptor(new MarathonHeadersInterceptor());
 		return b.target(Marathon.class, endpoint);
 	}

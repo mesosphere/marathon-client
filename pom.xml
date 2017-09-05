@@ -21,6 +21,21 @@
 			<version>${feign-version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.netflix.feign</groupId>
+			<artifactId>feign-slf4j</artifactId>
+			<version>${feign-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>${gson-version}</version>
@@ -124,6 +139,7 @@
 
 	<properties>
 		<feign-version>8.18.0</feign-version>
+		<slf4j.version>1.7.13</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gson-version>2.5</gson-version>
 		<guava-version>20.0</guava-version>
