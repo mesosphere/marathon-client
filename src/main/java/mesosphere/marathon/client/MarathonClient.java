@@ -1,18 +1,14 @@
 package mesosphere.marathon.client;
 
+import feign.*;
 import feign.Feign.Builder;
 import feign.auth.BasicAuthRequestInterceptor;
-import mesosphere.client.common.ModelUtils;
-import mesosphere.marathon.client.auth.TokenAuthRequestInterceptor;
-import feign.Feign;
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
-import feign.Response;
-import feign.Logger;
 import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 import feign.slf4j.Slf4jLogger;
+import mesosphere.client.common.ModelUtils;
+import mesosphere.marathon.client.auth.TokenAuthRequestInterceptor;
 
 import static java.util.Arrays.asList;
 
@@ -54,16 +50,16 @@ public class MarathonClient {
 				.encoder(new GsonEncoder(ModelUtils.GSON))
 				.decoder(new GsonDecoder(ModelUtils.GSON))
 				.errorDecoder(new MarathonErrorDecoder());
-		if (interceptors!=null)
+		if (interceptors != null)
 			b.requestInterceptors(asList(interceptors));
-        String debugOutput = System.getenv(DEBUG_JSON_OUTPUT);
-        if ( "System.out".equals(debugOutput) ) {
+		String debugOutput = System.getenv(DEBUG_JSON_OUTPUT);
+		if ("System.out".equals(debugOutput)) {
 			System.setProperty("org.slf4j.simpleLogger.logFile", "System.out");
-			System.setProperty("org.slf4j.simpleLogger.defaultLogLevel","debug");
-            b.logger(new Slf4jLogger()).logLevel(Logger.Level.FULL);
-		} else if(debugOutput != null){
-            b.logger(new Logger.JavaLogger().appendToFile(debugOutput)).logLevel(Logger.Level.FULL);
-        }
+			System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "debug");
+			b.logger(new Slf4jLogger()).logLevel(Logger.Level.FULL);
+		} else if (debugOutput != null) {
+			b.logger(new Logger.JavaLogger().appendToFile(debugOutput)).logLevel(Logger.Level.FULL);
+		}
 		b.requestInterceptor(new MarathonHeadersInterceptor());
 		return b.target(Marathon.class, endpoint);
 	}
