@@ -6,23 +6,13 @@ This project is a Java library for communicating with Marathon API. At this poin
 
 Add marathon-client as a dependency:
 
-For Marathon v1.5 and above:
+For Marathon v1.x:
 
 ```
 <dependency>
   <groupId>com.mesosphere</groupId>
   <artifactId>marathon-client</artifactId>
   <version>0.6.0</version>
-</dependency>
-```
-
-For Marathon v1.4 and below:
-
-```
-<dependency>
-  <groupId>com.mesosphere</groupId>
-  <artifactId>marathon-client</artifactId>
-  <version>0.5.0</version>
 </dependency>
 ```
 
