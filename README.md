@@ -12,7 +12,7 @@ For Marathon v1.x:
 <dependency>
   <groupId>com.mesosphere</groupId>
   <artifactId>marathon-client</artifactId>
-  <version>0.3.0</version>
+  <version>0.6.0</version>
 </dependency>
 ```
 
