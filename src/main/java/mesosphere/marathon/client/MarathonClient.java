@@ -9,6 +9,9 @@ import feign.gson.GsonEncoder;
 import feign.slf4j.Slf4jLogger;
 import mesosphere.client.common.ModelUtils;
 import mesosphere.marathon.client.auth.TokenAuthRequestInterceptor;
+import mesosphere.marathon.client.model.v2.ErrorResponse;
+
+import java.io.IOException;
 
 import static java.util.Arrays.asList;
 
@@ -27,6 +30,14 @@ public class MarathonClient {
 	static class MarathonErrorDecoder implements ErrorDecoder {
 		@Override
 		public Exception decode(String methodKey, Response response) {
+			if (response.status() >= 400 && response.status() < 500 ) {
+				try {
+					ErrorResponse parsed = ModelUtils.GSON.fromJson(response.body().asReader(), ErrorResponse.class);
+					return new MarathonException(response.status(), response.reason(), parsed);
+				} catch (IOException e) {
+					// intentionally nothing
+				}
+			}
 			return new MarathonException(response.status(), response.reason());
 		}
 	}
