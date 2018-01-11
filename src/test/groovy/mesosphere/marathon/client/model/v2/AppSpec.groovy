@@ -168,8 +168,29 @@ class AppSpec extends Specification {
 
   }
 
+	def "test example JSON 1.6 with IPv6"() {
+		given:
+		def json = exampleJSON_16()
 
-  def exampleJSON() {
+		def app = ModelUtils.GSON.fromJson(json, App.class)
+
+		expect:
+		app.healthChecks[0].ipProtocol == "IPv6"
+	}
+
+	def "test example JSON 1.6 without ipProtocol defined"() {
+		given:
+		def json = exampleJSON()
+
+		def app = ModelUtils.GSON.fromJson(json, App.class)
+
+		expect:
+		// we don't default the protocol
+		app.healthChecks[0].ipProtocol == null
+
+	}
+
+	def exampleJSON() {
 	return """
 {
   "id": "/foo",
@@ -391,4 +412,35 @@ class AppSpec extends Specification {
 }
 """
   }
+
+	def exampleJSON_16() {
+		return """
+{
+  "id": "/foo",
+  "instances": 2,
+  "cmd": "sleep 1000",
+  "cpus": 0.1,
+  "container": {
+	"docker": {
+	  "image": "mesosphere:marathon/latest"
+	},
+	"type": "DOCKER"
+  },
+  "healthChecks": [
+	{
+	  "gracePeriodSeconds": 300,
+	  "ignoreHttp1xx": false,
+	  "intervalSeconds": 20,
+	  "maxConsecutiveFailures": 3,
+	  "path": "/",
+	  "portIndex": 0,
+	  "protocol": "HTTP",
+	  "timeoutSeconds": 20,
+	  "ipProtocol" : "IPv6"
+	}
+  ],
+  "user": "root"
+}
+"""
+	}
 }

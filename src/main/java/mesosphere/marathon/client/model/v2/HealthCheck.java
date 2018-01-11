@@ -12,7 +12,10 @@ public class HealthCheck {
 	private Integer timeoutSeconds;
 	private boolean ignoreHttp1xx;
 	private String path;
-	private String protocol;
+	// protocol is http, https
+    private String protocol;
+	// ipProtocol is IPv4 or IPv6
+	private String ipProtocol;
 
 	public Integer getGracePeriodSeconds() {
 		return gracePeriodSeconds;
@@ -86,7 +89,11 @@ public class HealthCheck {
 		this.protocol = protocol;
 	}
 
-	public Command getCommand() {
+    public String getIpProtocol() { return ipProtocol; }
+
+    public void setIpProtocol(String ipProtocol) { this.ipProtocol = ipProtocol; }
+
+    public Command getCommand() {
 		return command;
 	}
 
