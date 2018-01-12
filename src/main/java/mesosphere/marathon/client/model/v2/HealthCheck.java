@@ -3,99 +3,110 @@ package mesosphere.marathon.client.model.v2;
 import mesosphere.client.common.ModelUtils;
 
 public class HealthCheck {
-	private Command command;
-	private Integer gracePeriodSeconds;
-	private Integer intervalSeconds;
-	private Integer maxConsecutiveFailures;
-	private Integer portIndex;
-	private Integer port;
-	private Integer timeoutSeconds;
-	private boolean ignoreHttp1xx;
-	private String path;
-	private String protocol;
+    private Command command;
+    private Integer gracePeriodSeconds;
+    private Integer intervalSeconds;
+    private Integer maxConsecutiveFailures;
+    private Integer portIndex;
+    private Integer port;
+    private Integer timeoutSeconds;
+    private boolean ignoreHttp1xx;
+    private String path;
+    // protocol is http, https
+    private String protocol;
+    // ipProtocol is IPv4 or IPv6
+    private String ipProtocol;
 
-	public Integer getGracePeriodSeconds() {
-		return gracePeriodSeconds;
-	}
+    public Integer getGracePeriodSeconds() {
+        return gracePeriodSeconds;
+    }
 
-	public void setGracePeriodSeconds(Integer gracePeriodSeconds) {
-		this.gracePeriodSeconds = gracePeriodSeconds;
-	}
+    public void setGracePeriodSeconds(Integer gracePeriodSeconds) {
+        this.gracePeriodSeconds = gracePeriodSeconds;
+    }
 
-	public Integer getIntervalSeconds() {
-		return intervalSeconds;
-	}
+    public Integer getIntervalSeconds() {
+        return intervalSeconds;
+    }
 
-	public void setIntervalSeconds(Integer intervalSeconds) {
-		this.intervalSeconds = intervalSeconds;
-	}
+    public void setIntervalSeconds(Integer intervalSeconds) {
+        this.intervalSeconds = intervalSeconds;
+    }
 
-	public Integer getMaxConsecutiveFailures() {
-		return maxConsecutiveFailures;
-	}
+    public Integer getMaxConsecutiveFailures() {
+        return maxConsecutiveFailures;
+    }
 
-	public void setMaxConsecutiveFailures(Integer maxConsecutiveFailures) {
-		this.maxConsecutiveFailures = maxConsecutiveFailures;
-	}
+    public void setMaxConsecutiveFailures(Integer maxConsecutiveFailures) {
+        this.maxConsecutiveFailures = maxConsecutiveFailures;
+    }
 
-	public Integer getPortIndex() {
-		return portIndex;
-	}
+    public Integer getPortIndex() {
+        return portIndex;
+    }
 
-	public void setPortIndex(Integer portIndex) {
-		this.portIndex = portIndex;
-	}
+    public void setPortIndex(Integer portIndex) {
+        this.portIndex = portIndex;
+    }
 
-	public Integer getPort() {
-		return port;
-	}
+    public Integer getPort() {
+        return port;
+    }
 
-	public void setPort(Integer port) {
-		this.port = port;
-	}
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 
-	public Integer getTimeoutSeconds() {
-		return timeoutSeconds;
-	}
+    public Integer getTimeoutSeconds() {
+        return timeoutSeconds;
+    }
 
-	public void setTimeoutSeconds(Integer timeoutSeconds) {
-		this.timeoutSeconds = timeoutSeconds;
-	}
+    public void setTimeoutSeconds(Integer timeoutSeconds) {
+        this.timeoutSeconds = timeoutSeconds;
+    }
 
-	public boolean isIgnoreHttp1xx() {
-		return ignoreHttp1xx;
-	}
+    public boolean isIgnoreHttp1xx() {
+        return ignoreHttp1xx;
+    }
 
-	public void setIgnoreHttp1xx(boolean ignoreHttp1xx) {
-		this.ignoreHttp1xx = ignoreHttp1xx;
-	}
+    public void setIgnoreHttp1xx(boolean ignoreHttp1xx) {
+        this.ignoreHttp1xx = ignoreHttp1xx;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public String getProtocol() {
-		return protocol;
-	}
+    public String getProtocol() {
+        return protocol;
+    }
 
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
-	}
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
 
-	public Command getCommand() {
-		return command;
-	}
+    public String getIpProtocol() {
+        return ipProtocol;
+    }
 
-	public void setCommand(Command command) {
-		this.command = command;
-	}
+    public void setIpProtocol(String ipProtocol) {
+        this.ipProtocol = ipProtocol;
+    }
 
-	@Override
-	public String toString() {
-		return ModelUtils.toString(this);
-	}
+    public Command getCommand() {
+        return command;
+    }
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
+    @Override
+    public String toString() {
+        return ModelUtils.toString(this);
+    }
 }
