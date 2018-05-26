@@ -12,6 +12,7 @@ public class Docker {
 	private Collection<Port> portMappings;
 	private Collection<Parameter> parameters;
 	private boolean privileged;
+	private PullConfig pullConfig;
 
 	public String getImage() {
 		return image;
@@ -60,6 +61,15 @@ public class Docker {
 	public void setForcePullImage(boolean forcePullImage) {
 		this.forcePullImage = forcePullImage;
 	}
+	
+	public PullConfig getPullConfig() {
+		return this.pullConfig;
+	}
+	
+	public void setPullConfig(PullConfig pullConfig) {
+		this.pullConfig = pullConfig;
+	}
+	
 	@Override
 	public String toString() {
 		return ModelUtils.toString(this);
