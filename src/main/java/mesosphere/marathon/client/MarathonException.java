@@ -17,8 +17,13 @@ public class MarathonException extends HttpResponseException {
 
 	private static String getDetailedMessage(ErrorResponse response, String reason) {
 		if (response.getMessage() != null && !response.getMessage().equals("")) {
-			StringBuilder newMessage = new StringBuilder(reason);
-			newMessage.append(": ");
+			StringBuilder newMessage = new StringBuilder();
+
+			if (reason != null && !reason.equals("")) {
+				newMessage.append(reason);
+				newMessage.append(": ");
+			}
+
 			newMessage.append(response.getMessage());
 
 			if (response.getDetails() != null && response.getDetails().length > 0) {
