@@ -121,7 +121,7 @@ class AppSpec extends Specification {
 	!fetch2.executable
 	fetch2.extract
 	fetch2.cache
-	fetch2.outputFile == "newname.zip"
+	fetch2.destPath == "newname.zip"
 
 	//secrets
 	app.secrets.size() == 2
@@ -339,7 +339,7 @@ class AppSpec extends Specification {
 	  "executable": false,
 	  "extract": true,
 	  "cache": true,
-	  "outputFile": "newname.zip"
+	  "destPath": "newname.zip"
 	}
   ],
   "user": "root",

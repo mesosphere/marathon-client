@@ -7,7 +7,7 @@ public class Fetchable {
     private Boolean executable;
     private Boolean extract;
     private Boolean cache;
-    private String outputFile;
+    private String destPath;
 
     @Override
     public String toString() {
@@ -46,11 +46,7 @@ public class Fetchable {
         this.cache = cache;
     }
 
-    public String getOutputFile() {
-        return outputFile;
-    }
+    public String getDestPath() { return destPath; }
 
-    public void setOutputFile(String outputFile) {
-        this.outputFile = outputFile;
-    }
+    public void setDestPath(String destPath) { this.destPath = destPath; }
 }
