@@ -1,5 +1,6 @@
 *.class
 http.log*
+.DS_Store
 
 # Package Files #
 *.jar
