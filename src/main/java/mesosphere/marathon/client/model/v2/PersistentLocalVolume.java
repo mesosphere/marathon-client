@@ -25,7 +25,7 @@ public class PersistentLocalVolume extends Volume {
         return ModelUtils.toString(this);
     }
 
-    class PersistentLocalVolumeInfo {
+    protected class PersistentLocalVolumeInfo {
         private Integer size;
 
         public Integer getSize() {
