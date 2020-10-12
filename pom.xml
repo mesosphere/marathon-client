@@ -138,7 +138,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gson-version>2.5</gson-version>
 		<guava-version>20.0</guava-version>
-		<junit-version>4.11</junit-version>
+		<junit-version>4.13.1</junit-version>
 		<mockweb-version>3.5.0</mockweb-version>
 	</properties>
 
